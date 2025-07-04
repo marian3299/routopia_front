@@ -14,3 +14,17 @@ export const getDestinations = async () => {
     throw error;
   }
 };
+
+export const createDestination = async (formData) => {
+  try {
+    const response = await axios.post(URLS.CREATE_DESTINATION, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating destination:", error);
+    throw error;
+  }
+};

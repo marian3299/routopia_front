@@ -14,7 +14,7 @@ const Recomendations = () => {
             id={recomendation.id}
             name={recomendation.name}
             location={recomendation.location}
-            score={recomendation.puntuacion}
+            score={recomendation.punctuation}
             price={recomendation.precio}
             image={recomendation.imagen}
           />
