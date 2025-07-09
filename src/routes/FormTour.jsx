@@ -2,9 +2,59 @@ import React from "react";
 import Button from "../components/Button";
 import useFormTour from "../hooks/useFormTour";
 import { MoonLoader } from "react-spinners";
+import Select from "react-select";
+import { Controller } from "react-hook-form";
 
 const FormTour = () => {
-  const { register, handleSubmit, errors, onSubmit, sending } = useFormTour();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    sending,
+    languages,
+    control,
+  } = useFormTour();
+
+  const customSelectStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: state.isFocused ? "2px solid #eb4d4b" : "2px solid #d1d1d1",
+      backgroundColor: "#f5f5f5",
+      color: "#1a1a1a",
+      padding: "2px 0",
+      borderRadius: "8px",
+      boxShadow: state.isFocused ? "0 0 5px rgba(0,0,0,0.2)" : "none",
+      minHeight: "40px",
+    }),
+    multiValue: (provided) => ({
+      ...provided,
+      backgroundColor: "#f1d6bd",
+      color: "#1a1a1a",
+      borderRadius: "6px",
+    }),
+    multiValueLabel: (provided) => ({
+      ...provided,
+      color: "#1a1a1a",
+      fontWeight: 500,
+    }),
+    multiValueRemove: (provided) => ({
+      ...provided,
+      color: "#eb4d4b",
+      ":hover": {
+        backgroundColor: "#eb4d4b",
+        color: "white",
+      },
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "#888",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      zIndex: 10,
+    }),
+  };
 
   return (
     <div className="main-container">
@@ -87,21 +137,32 @@ const FormTour = () => {
           <h2>Ubicación e idioma</h2>
           <div className="form-section">
             <div className="form-group">
-              <label htmlFor="language">
+              <label htmlFor="languages">
                 Idiomas <span className="required">*</span>
               </label>
-              <select
-                id="language"
-                {...register("language", {
-                  required: "El idioma es requerido",
-                })}
-              >
-                <option value="SPANISH">Español</option>
-                <option value="ENGLISH">Inglés</option>
-                <option value="FRENCH">Francés</option>
-              </select>
-              {errors.language && (
-                <span className="error">{errors.language.message}</span>
+              <Controller
+                name="languages"
+                control={control}
+                rules={{ required: "El idioma es requerido" }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    inputId="languages"
+                    options={languages}
+                    isMulti
+                    isSearchable={false}
+                    closeMenuOnSelect={false}
+                    placeholder="Seleccione los idiomas"
+                    styles={customSelectStyles}
+                    onChange={(selected) => field.onChange(selected)}
+                    value={languages.filter((option) =>
+                      field.value?.some((val) => val.value === option.value)
+                    )}
+                  />
+                )}
+              />
+              {errors.languages && (
+                <span className="error">{errors.languages.message}</span>
               )}
             </div>
             <div className="form-group">
