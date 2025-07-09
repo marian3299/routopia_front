@@ -626,6 +626,59 @@ button:hover .btnArrow {
   font-weight: bold;
 }
 
+/* Notificaciones */
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  z-index: 1000;
+}
+
+.notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f2f5;
+  color: #333;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-family: sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.notification.success {
+  border-left: 4px solid #52c41a;
+}
+
+.notification.error {
+  border-left: 4px solid #f5222d;
+}
+
+.notification.info {
+  border-left: 4px solid #1890ff;
+}
+
+.notification.warning {
+  border-left: 4px solid #faad14;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #999;
+  margin-left: 8px;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
 /* Responsive: una sola columna en móvil */
 @media (max-width: 900px) {
   .form-sections-container {
@@ -640,4 +693,27 @@ button:hover .btnArrow {
   .form-sections-container h2 {
     margin-top: 16px;
   }
+}
+
+/* Estilos para campos requeridos y errores */
+.required {
+  color: #eb4d4b;
+  font-weight: bold;
+}
+
+.error {
+  color: #eb4d4b;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
 }

@@ -1,72 +1,79 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { createDestination } from "../services/destino.service";
+import { useNotification } from "../context/useNotificationProvider";
+import { useState } from "react";
 
 const useFormTour = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    duration: "",
-    description: "",
-    language: "ENGLISH", // Valor inicial por defecto
-    location: "",
-    category: "FRANCE", // Valor inicial por defecto
-    image: null,
-    score: "",
-    city: "",
+  const [sending, setSending] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      price: "",
+      duration: "",
+      description: "",
+      language: "ENGLISH",
+      location: "",
+      category: "FRANCE",
+      score: "",
+      city: "",
+    },
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const { notify } = useNotification();
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  console.log(formData);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     const dataToSend = new FormData();
 
     const formDataToSend = {
-      name: formData.name,
-      price: parseFloat(formData.price),
-      duration: formData.duration,
-      description: formData.description,
-      language: formData.language,
-      location: formData.location,
-      category: formData.category,
-      image: formData.image,
-      score: parseFloat(formData.score),
-      city: formData.city,
+      name: data.name,
+      price: parseFloat(data.price),
+      duration: data.duration,
+      description: data.description,
+      language: data.language,
+      location: data.location,
+      category: data.category,
+      score: parseFloat(data.score),
+      city: data.city,
     };
 
     // Agregamos todos los campos del estado al objeto FormData
     Object.entries(formDataToSend).forEach(([key, value]) => {
-      if (value !== null) {
+      if (value !== null && value !== "") {
         dataToSend.append(key, value);
       }
     });
 
     try {
+      setSending(true);
       const result = await createDestination(dataToSend);
       console.log("Destino creado con éxito:", result);
-      alert("¡Destino guardado correctamente!");
-      // Aquí podrías redirigir al usuario o limpiar el formulario
+      notify({
+        message: "¡Destino guardado correctamente!",
+        type: "success",
+      });
+      reset(); // Limpiar el formulario
     } catch (error) {
       console.error("Falló la creación del destino:", error);
-      alert("Hubo un error al guardar el destino.");
-      // Aquí podrías mostrar un mensaje de error más específico al usuario
+      notify({
+        message: "Hubo un error al guardar el destino.",
+        type: "error",
+      });
+    } finally {
+      setSending(false);
     }
   };
 
   return {
-    formData,
-    handleChange,
+    register,
     handleSubmit,
+    errors,
+    onSubmit,
+    sending,
   };
 };
 

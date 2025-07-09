@@ -1,63 +1,85 @@
 import React from "react";
 import Button from "../components/Button";
 import useFormTour from "../hooks/useFormTour";
+import { MoonLoader } from "react-spinners";
 
 const FormTour = () => {
-  const { formData, handleChange, handleSubmit } = useFormTour();
+  const { register, handleSubmit, errors, onSubmit, sending } = useFormTour();
+
   return (
     <div className="main-container">
       <div className="form-tour-container">
         <h1>Agregar destino</h1>
-        <form className="form-sections-container" onSubmit={handleSubmit}>
+        <form
+          className="form-sections-container"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {/* Información general */}
           <h2>Información general</h2>
           <div className="form-section">
             <div className="form-group">
-              <label htmlFor="name">Nombre</label>
+              <label htmlFor="name">
+                Nombre <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 id="name"
-                name="name"
                 placeholder="Nombre del destino"
-                value={formData.name}
-                onChange={handleChange}
-                required
+                {...register("name", { required: "El nombre es requerido" })}
               />
+              {errors.name && (
+                <span className="error">{errors.name.message}</span>
+              )}
             </div>
             <div className="form-group">
-              <label htmlFor="price">Precio</label>
+              <label htmlFor="price">
+                Precio <span className="required">*</span>
+              </label>
               <input
                 type="number"
                 id="price"
-                name="price"
                 placeholder="Precio del destino"
-                value={formData.price}
-                onChange={handleChange}
-                required
+                {...register("price", {
+                  required: "El precio es requerido",
+                  min: { value: 0, message: "El precio debe ser mayor a 0" },
+                })}
               />
+              {errors.price && (
+                <span className="error">{errors.price.message}</span>
+              )}
             </div>
             <div className="form-group">
-              <label htmlFor="duration">Tiempo de duración (aproximado)</label>
+              <label htmlFor="duration">
+                Tiempo de duración (aproximado){" "}
+                <span className="required">*</span>
+              </label>
               <input
                 type="number"
                 id="duration"
-                name="duration"
                 placeholder="Tiempo de duración (horas)"
-                value={formData.duration}
-                onChange={handleChange}
-                required
+                {...register("duration", {
+                  required: "La duración es requerida",
+                  min: { value: 1, message: "La duración debe ser mayor a 0" },
+                })}
               />
+              {errors.duration && (
+                <span className="error">{errors.duration.message}</span>
+              )}
             </div>
             <div className="form-group">
-              <label htmlFor="description">Descripción</label>
+              <label htmlFor="description">
+                Descripción <span className="required">*</span>
+              </label>
               <textarea
                 id="description"
-                name="description"
                 placeholder="Descripción del destino"
-                value={formData.description}
-                onChange={handleChange}
-                required
+                {...register("description", {
+                  required: "La descripción es requerida",
+                })}
               />
+              {errors.description && (
+                <span className="error">{errors.description.message}</span>
+              )}
             </div>
           </div>
 
@@ -65,53 +87,62 @@ const FormTour = () => {
           <h2>Ubicación e idioma</h2>
           <div className="form-section">
             <div className="form-group">
-              <label htmlFor="language">Idiomas</label>
+              <label htmlFor="language">
+                Idiomas <span className="required">*</span>
+              </label>
               <select
                 id="language"
-                name="language"
-                placeholder="Seleccione un idioma"
-                value={formData.language}
-                onChange={handleChange}
-                required
+                {...register("language", {
+                  required: "El idioma es requerido",
+                })}
               >
                 <option value="SPANISH">Español</option>
                 <option value="ENGLISH">Inglés</option>
                 <option value="FRENCH">Francés</option>
               </select>
+              {errors.language && (
+                <span className="error">{errors.language.message}</span>
+              )}
             </div>
             <div className="form-group">
-              <label htmlFor="location">Dirección</label>
+              <label htmlFor="location">
+                Dirección <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 id="location"
-                name="location"
                 placeholder="Dirección del destino"
-                value={formData.location}
-                onChange={handleChange}
-                required
+                {...register("location", {
+                  required: "La dirección es requerida",
+                })}
               />
+              {errors.location && (
+                <span className="error">{errors.location.message}</span>
+              )}
             </div>
             <div className="form-group">
-              <label htmlFor="city">Ciudad</label>
+              <label htmlFor="city">
+                Ciudad <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 id="city"
-                name="city"
                 placeholder="Ciudad del destino"
-                value={formData.city}
-                onChange={handleChange}
-                required
+                {...register("city", { required: "La ciudad es requerida" })}
               />
+              {errors.city && (
+                <span className="error">{errors.city.message}</span>
+              )}
             </div>
             <div className="form-group">
-              <label htmlFor="category">Categoría</label>
+              <label htmlFor="category">
+                Categoría <span className="required">*</span>
+              </label>
               <select
                 id="category"
-                name="category"
-                placeholder="Seleccione una categoría"
-                value={formData.category}
-                onChange={handleChange}
-                required
+                {...register("category", {
+                  required: "La categoría es requerida",
+                })}
               >
                 <option value="FRANCE">Francia</option>
                 <option value="JAPAN">Japon</option>
@@ -119,6 +150,9 @@ const FormTour = () => {
                 <option value="GREECE">Grecia</option>
                 <option value="THAILAND">Tailandia</option>
               </select>
+              {errors.category && (
+                <span className="error">{errors.category.message}</span>
+              )}
             </div>
           </div>
 
@@ -127,33 +161,47 @@ const FormTour = () => {
           <div className="form-section">
             <div className="form-group">
               <label htmlFor="image">Imagen</label>
-              <input
-                type="file"
-                id="image"
-                name="image"
-                onChange={handleChange}
-              />
+              <input type="file" id="image" {...register("image")} />
             </div>
             <div className="form-group">
-              <label htmlFor="score">Puntuación</label>
+              <label htmlFor="score">
+                Puntuación <span className="required">*</span>
+              </label>
               <input
                 type="number"
                 id="score"
-                name="score"
                 placeholder="Puntuación del destino"
-                value={formData.score}
-                onChange={handleChange}
                 min="0"
                 max="5"
                 step="0.1"
-                required
+                {...register("score", {
+                  required: "La puntuación es requerida",
+                  min: {
+                    value: 0,
+                    message: "La puntuación debe ser mayor a 0",
+                  },
+                  max: {
+                    value: 5,
+                    message: "La puntuación debe ser menor o igual a 5",
+                  },
+                })}
               />
+              {errors.score && (
+                <span className="error">{errors.score.message}</span>
+              )}
             </div>
           </div>
           <Button
             className="form-button"
-            text="Guardar destino"
+            text={
+              sending ? (
+                <MoonLoader color="#fff" size={16} />
+              ) : (
+                "Guardar destino"
+              )
+            }
             type="submit"
+            disabled={sending}
           />
         </form>
       </div>
