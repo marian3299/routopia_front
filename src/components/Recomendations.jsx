@@ -16,7 +16,7 @@ const Recomendations = () => {
             location={recomendation.location}
             score={recomendation.punctuation}
             price={recomendation.precio}
-            image={recomendation.imagen}
+            image={recomendation.imageUrl}
           />
         ))}
       </div>

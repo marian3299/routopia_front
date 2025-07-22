@@ -12,6 +12,7 @@ const useFormTour = () => {
     formState: { errors },
     reset,
     control,
+    watch,
   } = useForm({
     defaultValues: {
       name: "",
@@ -23,6 +24,7 @@ const useFormTour = () => {
       category: "FRANCE",
       score: "",
       city: "",
+      image: null,
     },
   });
 
@@ -59,6 +61,11 @@ const useFormTour = () => {
     // Agregar los idiomas seleccionados
     languagesArray.forEach((lang) => dataToSend.append("languages", lang));
 
+    // Agregar la imagen si existe
+    if (data.image && data.image[0]) {
+      dataToSend.append("image", data.image[0]);
+    }
+
     try {
       const result = await createDestination(dataToSend);
       console.log("Destino creado con éxito:", result);
@@ -92,6 +99,7 @@ const useFormTour = () => {
     sending,
     languages,
     control,
+    watch,
   };
 };
 

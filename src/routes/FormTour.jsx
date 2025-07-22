@@ -14,7 +14,11 @@ const FormTour = () => {
     sending,
     languages,
     control,
+    watch,
   } = useFormTour();
+
+  // Observar el campo de imagen para mostrar vista previa
+  const imageFile = watch("image");
 
   const customSelectStyles = {
     control: (provided, state) => ({
@@ -222,7 +226,67 @@ const FormTour = () => {
           <div className="form-section">
             <div className="form-group">
               <label htmlFor="image">Imagen</label>
-              <input type="file" id="image" {...register("image")} />
+              <input
+                type="file"
+                id="image"
+                accept="image/*"
+                {...register("image", {
+                  validate: {
+                    fileSize: (files) => {
+                      if (files && files[0]) {
+                        const fileSize = files[0].size / 1024 / 1024; // Convertir a MB
+                        return (
+                          fileSize <= 5 || "La imagen debe ser menor a 5MB"
+                        );
+                      }
+                      return true;
+                    },
+                    fileType: (files) => {
+                      if (files && files[0]) {
+                        const validTypes = [
+                          "image/jpeg",
+                          "image/jpg",
+                          "image/png",
+                          "image/webp",
+                        ];
+                        return (
+                          validTypes.includes(files[0].type) ||
+                          "Solo se permiten archivos JPG, PNG o WEBP"
+                        );
+                      }
+                      return true;
+                    },
+                  },
+                })}
+              />
+              {errors.image && (
+                <span className="error">{errors.image.message}</span>
+              )}
+              {imageFile && imageFile[0] && (
+                <div className="image-preview">
+                  <img
+                    src={URL.createObjectURL(imageFile[0])}
+                    alt="Vista previa"
+                    style={{
+                      maxWidth: "200px",
+                      maxHeight: "200px",
+                      marginTop: "10px",
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontSize: "12px",
+                      color: "#666",
+                      marginTop: "5px",
+                    }}
+                  >
+                    {imageFile[0].name} (
+                    {(imageFile[0].size / 1024 / 1024).toFixed(2)} MB)
+                  </p>
+                </div>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="score">
