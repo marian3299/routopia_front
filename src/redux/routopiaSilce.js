@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import reducers from "./routopiaReducers";
 
 export const initialState = {
-  recomendations: [],
-  fetching_recomendations: false,
+  destinations: [],
+  fetching_destinations: false,
 };
 
 const routopiaSlice = createSlice({

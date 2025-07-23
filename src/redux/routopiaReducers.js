@@ -6,13 +6,13 @@ const commonAction = (state, action) => {
 };
 
 const cases = {
-  SET_RECOMENDATIONS: "setRecomendations",
-  SET_FETCHING_RECOMENDATIONS: "setFetchingRecomendations",
+  SET_DESTINATIONS: "setDestinations",
+  SET_FETCHING_DESTINATIONS: "setFetchingDestinations",
 };
 
 const reducers = {
-  [cases.SET_RECOMENDATIONS]: commonAction,
-  [cases.SET_FETCHING_RECOMENDATIONS]: commonAction,
+  [cases.SET_DESTINATIONS]: commonAction,
+  [cases.SET_FETCHING_DESTINATIONS]: commonAction,
 };
 
 export default reducers;

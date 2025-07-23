@@ -3,7 +3,7 @@ import useRecomendations from "../hooks/useRecomendations";
 import RecomendationCard from "../components/RecomendationCard";
 
 const Category = () => {
-  const { recomendations } = useRecomendations();
+  const { destinations } = useRecomendations();
   return (
     <div className="main-container">
       <div className="category-container">
@@ -12,15 +12,15 @@ const Category = () => {
         </div>
 
         <div className="recomendations category-recomendations">
-          {recomendations.map((recomendation) => (
+          {destinations.map((destination) => (
             <RecomendationCard
-              key={recomendation.id}
-              id={recomendation.id}
-              name={recomendation.name}
-              location={recomendation.location}
-              score={recomendation.score}
-              price={recomendation.price}
-              image={recomendation.image}
+              key={destination.id}
+              id={destination.id}
+              name={destination.name}
+              location={destination.location}
+              score={destination.score}
+              price={destination.price}
+              image={destination.image}
             />
           ))}
         </div>

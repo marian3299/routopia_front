@@ -3,23 +3,23 @@ import useRecomendations from "../hooks/useRecomendations";
 import RecomendationCard from "./RecomendationCard";
 
 const Recomendations = () => {
-  const { recomendations, fetching_recomendations } = useRecomendations();
+  const { destinations, fetching_destinations } = useRecomendations();
   return (
     <div className="recomendations-container">
       <h1>Recomendaciones</h1>
       <div className="recomendations">
-        {fetching_recomendations ? (
+        {fetching_destinations ? (
           <p>Cargando...</p>
         ) : (
-          recomendations.map((recomendation) => (
+          destinations.map((destination) => (
             <RecomendationCard
-              key={recomendation.id}
-              id={recomendation.id}
-              name={recomendation.name}
-              location={recomendation.location}
-              score={recomendation.punctuation}
-              price={recomendation.precio}
-              image={recomendation.imageUrl}
+              key={destination.id}
+              id={destination.id}
+              name={destination.name}
+              location={destination.location}
+              score={destination.punctuation}
+              price={destination.precio}
+              image={destination.imageUrl}
             />
           ))
         )}

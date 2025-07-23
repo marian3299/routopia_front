@@ -2,20 +2,20 @@ import { getDestinations } from "../services/destino.service";
 import { actions } from "./routopiaSilce";
 
 export const getDestinationsList = (query) => async (dispatch) => {
-  dispatch(actions.setRecomendations({ fetching_recomendations: true }));
+  dispatch(actions.setDestinations({ fetching_destinations: true }));
   try {
     const response = await getDestinations(query);
     dispatch(
-      actions.setRecomendations({
-        fetching_recomendations: false,
-        recomendations: response,
+      actions.setDestinations({
+        fetching_destinations: false,
+        destinations: response,
       })
     );
   } catch (error) {
     dispatch(
-      actions.setRecomendations({
-        fetching_recomendations: false,
-        recomendations: [],
+      actions.setDestinations({
+        fetching_destinations: false,
+        destinations: [],
       })
     );
     console.error(error);

@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../redux/store";
 import { getDestinationsList } from "../redux/routopiaActions";
 
 const useRecomendations = () => {
-  const { recomendations, fetching_recomendations } = useAppSelector(
+  const { destinations, fetching_destinations } = useAppSelector(
     (state) => state.routopiaStore
   );
 
@@ -13,7 +13,7 @@ const useRecomendations = () => {
     dispatch(getDestinationsList());
   }, []);
 
-  return { recomendations, fetching_recomendations };
+  return { destinations, fetching_destinations };
 };
 
 export default useRecomendations;
