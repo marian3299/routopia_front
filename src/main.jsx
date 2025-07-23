@@ -4,11 +4,15 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { NotificationProvider } from "./context/NotificationProvider.jsx";
+import { Provider } from "react-redux";
+import store from "./redux/store.js";
 
 createRoot(document.getElementById("root")).render(
-  <NotificationProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </NotificationProvider>
+  <Provider store={store}>
+    <NotificationProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </NotificationProvider>
+  </Provider>
 );

@@ -1,65 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { getDestinations } from "../services/destino.service";
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/store";
+import { getDestinationsList } from "../redux/routopiaActions";
 
 const useRecomendations = () => {
-  const [recomendations, setRecomendations] = useState([]);
-  /* const recomendations = [
-    {
-      id: 1,
-      name: "Torre Eiffel",
-      location: "París, Francia",
-      score: 4.5,
-      price: 100,
-      image: "/src/assets/torre_eiffel.jpg",
-    },
-    {
-      id: 2,
-      name: "Asakusa",
-      location: "Tokio, Japón",
-      score: 4.0,
-      price: 80,
-      image: "/src/assets/asakusa.webp",
-    },
-    {
-      id: 3,
-      name: "Cañón del Sumidero",
-      location: "Chiapas, México",
-      score: 4.8,
-      price: 50,
-      image: "/src/assets/canon_del_sumidero.jpg",
-    },
-    {
-      id: 4,
-      name: "Partenón",
-      location: "Atenas, Grecia",
-      score: 4.2,
-      price: 90,
-      image: "/src/assets/pertenon.jpg",
-    },
-    {
-      id: 5,
-      name: "Wat Pho",
-      location: "Bangkok, Tailandia",
-      score: 4.3,
-      price: 70,
-      image: "/src/assets/wat_pho.webp",
-    },
-  ]; */
+  const { recomendations, fetching_recomendations } = useAppSelector(
+    (state) => state.routopiaStore
+  );
 
-  const getRecomendations = async () => {
-    try {
-      const response = await getDestinations();
-      setRecomendations(response);
-    } catch (error) {
-      console.error("Error fetching destinations:", error);
-    }
-  };
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getRecomendations();
+    dispatch(getDestinationsList());
   }, []);
 
-  return { recomendations };
+  return { recomendations, fetching_recomendations };
 };
 
 export default useRecomendations;
