@@ -17,6 +17,16 @@ export const getDestinations = async (query = "") => {
   }
 };
 
+export const getDestinationById = async (id) => {
+  try {
+    const response = await axios.get(URLS.GET_DESTINATION_BY_ID(id));
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching destination:", error);
+    throw error;
+  }
+};
+
 export const createDestination = async (formData) => {
   try {
     const response = await axios.post(URLS.CREATE_DESTINATION, formData, {

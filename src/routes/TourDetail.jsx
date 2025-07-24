@@ -4,12 +4,19 @@ import { Link } from "react-router-dom";
 import ImageCarousel from "../components/ImageCarousel";
 import TourDescription from "../components/TourDescription";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import useTourDetail from "../hooks/useTourDetail";
 
 const TourDetail = () => {
+  const { destination, fetching_destination } = useTourDetail();
+
+  if (fetching_destination) {
+    return <div>Cargando...</div>;
+  }
+
   return (
     <div className="tour-detail-container">
       <div className="tour-detail-header">
-        <h1>Torre Eiffel</h1>
+        <h1>{destination?.name}</h1>
 
         <Link to="/">
           <button className="back-button">
