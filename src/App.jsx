@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tour/:id" element={<TourDetail />} />
-          <Route path="/category/:id" element={<Category />} />
+          <Route path="/category/:type" element={<Category />} />
           <Route path="/new-tour" element={<FormTour />} />
         </Routes>
       </div>

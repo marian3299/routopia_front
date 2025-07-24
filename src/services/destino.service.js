@@ -2,9 +2,11 @@
 import axios from "axios";
 import { URLS } from "./urls";
 
-export const getDestinations = async () => {
+export const getDestinations = async (query = "") => {
   try {
-    const response = await axios.get(URLS.GET_DESTINATIONS);
+    const response = await axios.get(
+      `${URLS.GET_DESTINATIONS}${query ? `${query}` : ""}`
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching destinations:", error);

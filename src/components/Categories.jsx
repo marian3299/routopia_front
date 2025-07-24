@@ -10,7 +10,7 @@ const Categories = () => {
       <p>Explora los mejores lugares para visitar.</p>
       <div className="categories">
         {categories.map((category) => (
-          <Link to={`/category/${category.id}`} key={category.id}>
+          <Link to={`/category/${category.type}`} key={category.id}>
             <div
               className="category-card"
               style={{ backgroundImage: `url(${category.image})` }}
