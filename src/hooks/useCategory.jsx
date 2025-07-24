@@ -21,8 +21,8 @@ const useCategory = () => {
         return "Francia";
       case "JAPAN":
         return "Japon";
-      case "CHIAPAS":
-        return "Chiapas";
+      case "MEXICO":
+        return "México";
       case "GREECE":
         return "Grecia";
       case "THAILAND":

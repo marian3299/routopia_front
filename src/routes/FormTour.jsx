@@ -211,7 +211,7 @@ const FormTour = () => {
               >
                 <option value="FRANCE">Francia</option>
                 <option value="JAPAN">Japon</option>
-                <option value="CHIAPAS">Chiapas</option>
+                <option value="MEXICO">México</option>
                 <option value="GREECE">Grecia</option>
                 <option value="THAILAND">Tailandia</option>
               </select>

@@ -16,8 +16,8 @@ const useCategories = () => {
     },
     {
       id: 3,
-      name: "Chiapas",
-      type: "CHIAPAS",
+      name: "México",
+      type: "MEXICO",
       image: "/src/assets/chiapas.webp",
     },
     {
