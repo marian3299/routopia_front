@@ -26,22 +26,14 @@ const TourDetail = () => {
       </div>
       <div className="tour-detail-content ">
         <ImageCarousel />
-        <TourDescription />
+        <TourDescription destination={destination} />
       </div>
 
       <hr className="custom-divider" />
 
       <div className="tour-description">
         <h1>Descripción general</h1>
-        <p>
-          Vive una experiencia inolvidable con este tour guiado por el monumento
-          más emblemático de Francia. Accede a los niveles superiores de la
-          Torre Eiffel sin complicaciones y disfruta de vistas panorámicas
-          impresionantes de la Ciudad de la Luz. Aprende sobre su fascinante
-          historia, su arquitectura y los secretos que esconde, de la mano de
-          guías expertos. Perfecto para parejas, familias o viajeros solitarios
-          que quieren captar la esencia de París desde lo más alto.
-        </p>
+        <p>{destination?.description}</p>
       </div>
 
       <div id="image-gallery" className="image-gallery">

@@ -3,11 +3,23 @@ import { FaClock } from "react-icons/fa";
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { FaLocationDot } from "react-icons/fa6";
 
-const TourDescription = () => {
+const TourDescription = ({ destination }) => {
+  const getLanguage = (language) => {
+    switch (language) {
+      case "SPANISH":
+        return "Español";
+      case "ENGLISH":
+        return "Inglés";
+      case "FRENCH":
+        return "Francés";
+      default:
+        return language;
+    }
+  };
   return (
     <div className="tour-description-card">
       <h2>
-        Desde $1000 <span>por persona</span>
+        Desde ${destination?.precio} <span>por persona</span>
       </h2>
 
       <div className="tour-reservation">
@@ -18,20 +30,21 @@ const TourDescription = () => {
       </div>
 
       <p className="icon-text">
-        <FaClock className="icon" /> 3 horas (aprox.)
+        <FaClock className="icon" /> {destination?.duration_time} horas (aprox.)
       </p>
       <div className="tour-languages">
         <p className="icon-text">
           <IoChatbubbleEllipses className="icon" /> Idiomas
         </p>
         <ul>
-          <li>Español</li>
-          <li>Inglés</li>
+          {destination?.languages.map((language) => (
+            <li key={language}>{getLanguage(language)}</li>
+          ))}
         </ul>
       </div>
       <p className="icon-text">
-        <FaLocationDot className="icon" /> Av. Gustave Eiffel, 75007 Paris,
-        Francia
+        <FaLocationDot className="icon" /> {destination?.address},{" "}
+        {destination?.city}
       </p>
     </div>
   );
