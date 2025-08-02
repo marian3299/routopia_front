@@ -25,7 +25,10 @@ const TourDetail = () => {
         </Link>
       </div>
       <div className="tour-detail-content ">
-        <ImageCarousel />
+        <ImageCarousel
+          images={destination?.secondaryImages || []}
+          mainImage={destination?.image}
+        />
         <TourDescription destination={destination} />
       </div>
 
@@ -40,13 +43,7 @@ const TourDetail = () => {
         <h1>Galería de imágenes</h1>
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
           <Masonry gutter="12px">
-            {[
-              "/src/assets/torre_eiffel.jpg",
-              "/src/assets/asakusa.webp",
-              "/src/assets/chiapas.webp",
-              "/src/assets/pertenon.jpg",
-              "/src/assets/wat_pho.webp",
-            ].map((src, index) => (
+            {destination?.secondaryImages?.map((src, index) => (
               <img
                 key={index}
                 src={src}

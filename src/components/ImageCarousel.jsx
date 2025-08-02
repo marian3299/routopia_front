@@ -1,9 +1,8 @@
 import React from "react";
 import useImageCarousel from "../hooks/useImageCarousel";
 
-const ImageCarousel = () => {
-  const { showImage, nextImage, prevImage, images, currentIndex } =
-    useImageCarousel();
+const ImageCarousel = ({ images }) => {
+  const { showImage, nextImage, prevImage, currentIndex } = useImageCarousel();
   return (
     <div className="carousel-container">
       <div className="thumbnails">
