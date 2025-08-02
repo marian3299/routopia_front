@@ -476,6 +476,7 @@ button:hover .btnArrow {
   flex-direction: column;
   gap: 16px;
   max-width: 1240px;
+  width: 100%;
 }
 .tour-description p {
   line-height: 1.5;
