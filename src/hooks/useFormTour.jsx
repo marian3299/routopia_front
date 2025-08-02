@@ -25,6 +25,7 @@ const useFormTour = () => {
       score: "",
       city: "",
       image: null,
+      image_list: null,
     },
   });
 
@@ -64,6 +65,13 @@ const useFormTour = () => {
     // Agregar la imagen si existe
     if (data.image && data.image[0]) {
       dataToSend.append("image", data.image[0]);
+    }
+
+    // Agregar las imágenes adicionales si existen
+    if (data.image_list && data.image_list.length > 0) {
+      Array.from(data.image_list).forEach((image) => {
+        dataToSend.append("image_list", image);
+      });
     }
 
     try {

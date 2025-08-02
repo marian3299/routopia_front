@@ -225,12 +225,15 @@ const FormTour = () => {
           <h2>Multimedia y calificación</h2>
           <div className="form-section">
             <div className="form-group">
-              <label htmlFor="image">Imagen</label>
+              <label htmlFor="image">
+                Imagen principal <span className="required">*</span>
+              </label>
               <input
                 type="file"
                 id="image"
                 accept="image/*"
                 {...register("image", {
+                  required: "La imagen principal es requerida",
                   validate: {
                     fileSize: (files) => {
                       if (files && files[0]) {
@@ -288,6 +291,32 @@ const FormTour = () => {
                 </div>
               )}
             </div>
+            {/* Imágenes adicionales */}
+            <div className="form-group">
+              <label htmlFor="image_list">
+                Imágenes para galería <span className="required">*</span>
+              </label>
+              <input
+                type="file"
+                id="image_list"
+                accept="image/*"
+                multiple
+                {...register("image_list", {
+                  required: "Las imágenes de galería son requeridas",
+                  validate: {
+                    minImages: (files) => {
+                      if (!files || files.length < 3) {
+                        return "Debes seleccionar al menos 3 imágenes para la galería";
+                      }
+                      return true;
+                    },
+                  },
+                })}
+              />
+              {errors.image_list && (
+                <span className="error">{errors.image_list.message}</span>
+              )}
+            </div>
             <div className="form-group">
               <label htmlFor="score">
                 Puntuación <span className="required">*</span>
@@ -316,6 +345,7 @@ const FormTour = () => {
               )}
             </div>
           </div>
+
           <Button
             className="form-button"
             text={
