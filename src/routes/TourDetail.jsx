@@ -7,7 +7,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import useTourDetail from "../hooks/useTourDetail";
 
 const TourDetail = () => {
-  const { destination, fetching_destination } = useTourDetail();
+  const { destination, fetching_destination, carouserImages } = useTourDetail();
 
   if (fetching_destination) {
     return <div>Cargando...</div>;
@@ -25,10 +25,7 @@ const TourDetail = () => {
         </Link>
       </div>
       <div className="tour-detail-content ">
-        <ImageCarousel
-          images={destination?.secondaryImages || []}
-          mainImage={destination?.image}
-        />
+        <ImageCarousel images={carouserImages} mainImage={destination?.image} />
         <TourDescription destination={destination} />
       </div>
 

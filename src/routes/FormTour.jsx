@@ -305,7 +305,7 @@ const FormTour = () => {
                   required: "Las imágenes de galería son requeridas",
                   validate: {
                     minImages: (files) => {
-                      if (!files || files.length < 3) {
+                      if (!files || files.length < 5) {
                         return "Debes seleccionar al menos 3 imágenes para la galería";
                       }
                       return true;
