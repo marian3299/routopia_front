@@ -24,7 +24,7 @@ const TourDetail = () => {
           </button>
         </Link>
       </div>
-      <div className="tour-detail-content ">
+      <div className="tour-detail-content">
         <ImageCarousel images={carouserImages} mainImage={destination?.image} />
         <TourDescription destination={destination} />
       </div>
