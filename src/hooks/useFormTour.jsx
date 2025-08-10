@@ -75,19 +75,24 @@ const useFormTour = () => {
     }
 
     try {
-      const result = await createDestination(dataToSend);
-      console.log("Destino creado con éxito:", result);
+      await createDestination(dataToSend);
       notify({
         message: "¡Destino guardado correctamente!",
         type: "success",
       });
       reset(); // Limpiar el formulario
     } catch (error) {
-      console.error("Falló la creación del destino:", error);
-      notify({
-        message: "Hubo un error al guardar el destino.",
-        type: "error",
-      });
+      if (error.response.data.message) {
+        notify({
+          message: error.response.data.message,
+          type: "error",
+        });
+      } else {
+        notify({
+          message: "Hubo un error al guardar el destino.",
+          type: "error",
+        });
+      }
     } finally {
       setSending(false);
     }
