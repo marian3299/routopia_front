@@ -8,6 +8,10 @@ export const initialState = {
   fetching_destination: false,
   search: "",
   hasSearch: false,
+  totalElements: 0,
+  totalPages: 0,
+  currentPage: 0,
+  pageSize: 10,
 };
 
 const routopiaSlice = createSlice({

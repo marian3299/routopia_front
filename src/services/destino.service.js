@@ -2,11 +2,25 @@
 import axios from "axios";
 import { URLS } from "./urls";
 
-export const getDestinations = async (query = "") => {
+export const getDestinations = async (query = {}) => {
   try {
-    const response = await axios.get(
-      `${URLS.GET_DESTINATIONS}${query ? `${query}` : ""}`
-    );
+    // Convertir el objeto query a parámetros de URL
+    let queryString = "";
+    if (query && Object.keys(query).length > 0) {
+      const params = new URLSearchParams();
+      Object.entries(query).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          params.append(key, value);
+        }
+      });
+      queryString = params.toString();
+    }
+
+    const url = queryString
+      ? `${URLS.GET_DESTINATIONS}?${queryString}`
+      : URLS.GET_DESTINATIONS;
+
+    const response = await axios.get(url);
     return response.data;
   } catch (error) {
     console.error("Error fetching destinations:", error);

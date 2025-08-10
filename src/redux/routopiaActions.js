@@ -18,26 +18,43 @@ export const clearSearch = () => (dispatch) => {
   dispatch(actions.setHasSearch({ hasSearch: false }));
 };
 
-export const getDestinationsList = (query) => async (dispatch) => {
-  dispatch(actions.setDestinations({ fetching_destinations: true }));
-  try {
-    const response = await getDestinations(query);
-    dispatch(
-      actions.setDestinations({
-        fetching_destinations: false,
-        destinations: response,
-      })
-    );
-  } catch (error) {
-    dispatch(
-      actions.setDestinations({
-        fetching_destinations: false,
-        destinations: [],
-      })
-    );
-    console.error(error);
-  }
-};
+export const getDestinationsList =
+  (query, page = 0, size = 10) =>
+  async (dispatch) => {
+    dispatch(actions.setDestinations({ fetching_destinations: true }));
+    try {
+      // Agregar parámetros de paginación al query
+      const paginationParams = {
+        ...query,
+        page,
+        size,
+      };
+
+      const response = await getDestinations(paginationParams);
+      dispatch(
+        actions.setDestinations({
+          fetching_destinations: false,
+          destinations: response.content || response, // Soporta tanto paginación como lista simple
+          totalElements: response.totalElements || response.length,
+          totalPages: response.totalPages || Math.ceil(response.length / size),
+          currentPage: page,
+          pageSize: size,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        actions.setDestinations({
+          fetching_destinations: false,
+          destinations: [],
+          totalElements: 0,
+          totalPages: 0,
+          currentPage: page,
+          pageSize: size,
+        })
+      );
+      console.error(error);
+    }
+  };
 
 export const getDestinationDetail = (id) => async (dispatch) => {
   dispatch(actions.setDestination({ fetching_destination: true }));

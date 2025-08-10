@@ -11,8 +11,10 @@ const SearchContainer = () => {
   const { search } = useAppSelector((state) => state.routopiaStore);
 
   const onSearch = () => {
-    dispatch(setHasSearch(true));
-    dispatch(getDestinationsList(`?q=${search}`));
+    if (search.trim()) {
+      dispatch(setHasSearch(true));
+      dispatch(getDestinationsList({ q: search.trim() }, 0, 1));
+    }
   };
 
   return (

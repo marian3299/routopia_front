@@ -746,3 +746,59 @@ button:hover .btnArrow {
   gap: 16px;
   width: 100%;
 }
+
+/* Estilos para la paginación */
+.pagination-container {
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 20px 0;
+  margin: 0;
+  gap: 8px;
+}
+
+.page-item {
+  margin: 0 4px;
+}
+
+.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 40px;
+  height: 40px;
+}
+
+.page-link:hover {
+  background-color: #f8f9fa;
+  border-color: #007bff;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.page-item.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-item.previous .page-link,
+.page-item.next .page-link {
+  font-weight: bold;
+}

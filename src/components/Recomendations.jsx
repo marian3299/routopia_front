@@ -1,9 +1,17 @@
 import React from "react";
 import useRecomendations from "../hooks/useRecomendations";
 import RecomendationCard from "./RecomendationCard";
+import Pagination from "./Pagination";
 
 const Recomendations = () => {
-  const { destinations, fetching_destinations } = useRecomendations();
+  const {
+    destinations,
+    fetching_destinations,
+    totalPages,
+    currentPage,
+    goToPage,
+  } = useRecomendations({}, 10);
+
   return (
     <div className="recomendations-container">
       <h1>Recomendaciones</h1>
@@ -24,6 +32,16 @@ const Recomendations = () => {
           ))
         )}
       </div>
+
+      {/* Paginación reutilizable */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={goToPage}
+        loading={fetching_destinations}
+        previousLabel="← Anterior"
+        nextLabel="Siguiente →"
+      />
     </div>
   );
 };

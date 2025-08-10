@@ -6,13 +6,13 @@ import SearchResults from "../components/SearchResults";
 import { useAppSelector } from "../redux/store";
 
 const Home = () => {
-  const { hasSearch } = useAppSelector((state) => state.routopiaStore);
+  const { hasSearch, search } = useAppSelector((state) => state.routopiaStore);
 
   return (
     <main>
       <SearchContainer />
       {hasSearch ? (
-        <SearchResults />
+        <SearchResults searchQuery={search} />
       ) : (
         <>
           <Categories />
