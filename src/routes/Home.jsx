@@ -2,13 +2,23 @@ import React from "react";
 import SearchContainer from "../components/SearchContainer";
 import Categories from "../components/Categories";
 import Recomendations from "../components/Recomendations";
+import SearchResults from "../components/SearchResults";
+import { useAppSelector } from "../redux/store";
 
 const Home = () => {
+  const { hasSearch } = useAppSelector((state) => state.routopiaStore);
+
   return (
     <main>
       <SearchContainer />
-      <Categories />
-      <Recomendations />
+      {hasSearch ? (
+        <SearchResults />
+      ) : (
+        <>
+          <Categories />
+          <Recomendations />
+        </>
+      )}
     </main>
   );
 };

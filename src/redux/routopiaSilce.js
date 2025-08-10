@@ -6,6 +6,8 @@ export const initialState = {
   fetching_destinations: false,
   destination: null,
   fetching_destination: false,
+  search: "",
+  hasSearch: false,
 };
 
 const routopiaSlice = createSlice({

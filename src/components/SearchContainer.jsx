@@ -1,12 +1,31 @@
 import React from "react";
+import { useAppDispatch, useAppSelector } from "../redux/store";
+import {
+  setSearch,
+  setHasSearch,
+  getDestinationsList,
+} from "../redux/routopiaActions";
 
 const SearchContainer = () => {
+  const dispatch = useAppDispatch();
+  const { search } = useAppSelector((state) => state.routopiaStore);
+
+  const onSearch = () => {
+    dispatch(setHasSearch(true));
+    dispatch(getDestinationsList(`?q=${search}`));
+  };
+
   return (
     <div className="search-container">
       <h1>Busca tu nueva aventura</h1>
       <div className="input-container">
-        <input type="text" placeholder="Buscar tour" />
-        <button>Buscar</button>
+        <input
+          type="text"
+          placeholder="Buscar tour por nombre o ciudad"
+          onChange={(e) => dispatch(setSearch(e.target.value))}
+          value={search}
+        />
+        <button onClick={onSearch}>Buscar</button>
       </div>
     </div>
   );
