@@ -13,7 +13,7 @@ const SearchResults = ({ searchQuery }) => {
     currentPage,
     goToPage,
     updateQuery,
-  } = useRecomendations({ q: searchQuery }, 1);
+  } = useRecomendations({ q: searchQuery }, 10);
 
   const dispatch = useAppDispatch();
 

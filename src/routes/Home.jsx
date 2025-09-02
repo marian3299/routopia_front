@@ -12,7 +12,9 @@ const Home = () => {
     <main>
       <SearchContainer />
       {hasSearch ? (
-        <SearchResults searchQuery={search} />
+        <div className="recomendations-container">
+          <SearchResults searchQuery={search} />
+        </div>
       ) : (
         <>
           <Categories />

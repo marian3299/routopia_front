@@ -7,6 +7,7 @@ export const initialState = {
   destination: null,
   fetching_destination: false,
   search: "",
+  inputSearch: "",
   hasSearch: false,
   totalElements: 0,
   totalPages: 0,

@@ -1,19 +1,16 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import {
-  setSearch,
-  setHasSearch,
-  getDestinationsList,
-} from "../redux/routopiaActions";
+import { setHasSearch, setSearch } from "../redux/routopiaActions";
+import { actions } from "../redux/routopiaSilce";
 
 const SearchContainer = () => {
   const dispatch = useAppDispatch();
-  const { search } = useAppSelector((state) => state.routopiaStore);
+  const { inputSearch } = useAppSelector((state) => state.routopiaStore);
 
   const onSearch = () => {
-    if (search.trim()) {
+    if (inputSearch.trim()) {
       dispatch(setHasSearch(true));
-      dispatch(getDestinationsList({ q: search.trim() }, 0, 1));
+      dispatch(setSearch(inputSearch));
     }
   };
 
@@ -24,8 +21,10 @@ const SearchContainer = () => {
         <input
           type="text"
           placeholder="Buscar tour por nombre o ciudad"
-          onChange={(e) => dispatch(setSearch(e.target.value))}
-          value={search}
+          onChange={(e) =>
+            dispatch(actions.setInputSearch({ inputSearch: e.target.value }))
+          }
+          value={inputSearch}
         />
         <button onClick={onSearch}>Buscar</button>
       </div>

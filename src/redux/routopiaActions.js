@@ -7,6 +7,7 @@ import { actions } from "./routopiaSilce";
 // Acciones para el estado de búsqueda
 export const setSearch = (search) => (dispatch) => {
   dispatch(actions.setSearch({ search }));
+  dispatch(actions.setInputSearch({ inputSearch: search }));
 };
 
 export const setHasSearch = (hasSearch) => (dispatch) => {
@@ -15,6 +16,7 @@ export const setHasSearch = (hasSearch) => (dispatch) => {
 
 export const clearSearch = () => (dispatch) => {
   dispatch(actions.setSearch({ search: "" }));
+  dispatch(actions.setInputSearch({ inputSearch: "" }));
   dispatch(actions.setHasSearch({ hasSearch: false }));
 };
 
