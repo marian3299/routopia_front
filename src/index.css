@@ -548,6 +548,34 @@ button:hover .btnArrow {
   width: 100%;
 }
 
+/* Auth (Login/Register) */
+.auth-container {
+  max-width: 420px;
+  gap: 12px;
+}
+
+.auth-card {
+  padding: 20px 16px;
+}
+
+.auth-title {
+  color: #eb4d4b;
+  text-align: center;
+}
+
+.auth-alt {
+  text-align: center;
+}
+
+.auth-link {
+  color: #eb4d4b;
+  font-weight: 600;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
