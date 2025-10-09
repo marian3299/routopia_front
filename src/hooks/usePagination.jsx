@@ -84,6 +84,21 @@ const usePagination = (
     await fetchFunction(initialQuery, 0, pageSize);
   }, [fetchFunction, initialQuery, pageSize]);
 
+  /**
+   * Función para refrescar la página actual manteniendo la query
+   */
+  const refresh = useCallback(async () => {
+    await fetchFunction(query, currentPage, pageSize);
+  }, [fetchFunction, query, currentPage, pageSize]);
+
+  /**
+   * Función para volver a la primera página y recargar con la query actual
+   */
+  const goToFirstPage = useCallback(async () => {
+    setCurrentPage(0);
+    await fetchFunction(query, 0, pageSize);
+  }, [fetchFunction, query, pageSize]);
+
   return {
     // Estado
     currentPage,
@@ -96,6 +111,8 @@ const usePagination = (
     goToNextPage,
     updateQuery,
     resetPagination,
+    refresh,
+    goToFirstPage,
 
     // Helpers
     isFirstPage: currentPage === 0,

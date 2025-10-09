@@ -33,12 +33,19 @@ export const getDestinationsList =
       };
 
       const response = await getDestinations(paginationParams);
+      const destinations = response.content || response;
+      const totalElements =
+        response.totalElements ||
+        (Array.isArray(response) ? response.length : 0);
+      const totalPages =
+        response.totalPages || Math.ceil(totalElements / size) || 0;
+
       dispatch(
         actions.setDestinations({
           fetching_destinations: false,
-          destinations: response.content || response, // Soporta tanto paginación como lista simple
-          totalElements: response.totalElements || response.length,
-          totalPages: response.totalPages || Math.ceil(response.length / size),
+          destinations: destinations || [],
+          totalElements: totalElements,
+          totalPages: totalPages,
           currentPage: page,
           pageSize: size,
         })

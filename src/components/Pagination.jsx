@@ -27,7 +27,10 @@ const Pagination = ({
   breakLabel = "...",
   containerClassName = "pagination-container",
 }) => {
-  if (totalPages <= 1 || loading) {
+  // Validar que totalPages sea un número entero válido mayor a 1
+  const validTotalPages = Math.ceil(totalPages) || 0;
+
+  if (validTotalPages <= 1 || loading || !validTotalPages) {
     return null;
   }
 
@@ -40,7 +43,7 @@ const Pagination = ({
   return (
     <div className={containerClassName}>
       <ReactPaginate
-        pageCount={totalPages}
+        pageCount={validTotalPages}
         onPageChange={handlePageChange}
         forcePage={currentPage}
         containerClassName="pagination"

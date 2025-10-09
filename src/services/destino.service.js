@@ -50,3 +50,13 @@ export const createDestination = async (formData) => {
     throw error;
   }
 };
+
+export const deleteDestination = async (id) => {
+  try {
+    const response = await api.delete(URLS.DELETE_DESTINATION(id));
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting destination:", error);
+    throw error;
+  }
+};
