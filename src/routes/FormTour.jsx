@@ -12,9 +12,13 @@ const FormTour = () => {
     errors,
     onSubmit,
     sending,
+    loading,
+    isEditMode,
     languages,
     control,
     watch,
+    currentImageUrl,
+    currentSecondaryImages,
   } = useFormTour();
 
   // Observar el campo de imagen para mostrar vista previa
@@ -60,10 +64,26 @@ const FormTour = () => {
     }),
   };
 
+  // Mostrar loading mientras se cargan los datos en modo edición
+  if (loading) {
+    return (
+      <div className="main-container">
+        <div className="form-tour-container">
+          <div style={{ textAlign: "center", padding: "50px" }}>
+            <MoonLoader color="#eb4d4b" size={50} />
+            <p style={{ marginTop: "20px", fontSize: "18px" }}>
+              Cargando datos del destino...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="main-container">
       <div className="form-tour-container">
-        <h1>Agregar destino</h1>
+        <h1>{isEditMode ? "Editar destino" : "Agregar destino"}</h1>
         <form
           className="form-sections-container"
           onSubmit={handleSubmit(onSubmit)}
@@ -228,12 +248,29 @@ const FormTour = () => {
               <label htmlFor="image">
                 Imagen principal <span className="required">*</span>
               </label>
+              {isEditMode && currentImageUrl && !imageFile?.[0] && (
+                <div className="image-preview" style={{ marginBottom: "10px" }}>
+                  <p style={{ fontSize: "14px", marginBottom: "5px" }}>
+                    Imagen actual:
+                  </p>
+                  <img
+                    src={currentImageUrl}
+                    alt="Imagen actual"
+                    style={{
+                      maxWidth: "200px",
+                      maxHeight: "200px",
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              )}
               <input
                 type="file"
                 id="image"
                 accept="image/*"
                 {...register("image", {
-                  required: "La imagen principal es requerida",
+                  required: !isEditMode && "La imagen principal es requerida",
                   validate: {
                     fileSize: (files) => {
                       if (files && files[0]) {
@@ -267,13 +304,21 @@ const FormTour = () => {
               )}
               {imageFile && imageFile[0] && (
                 <div className="image-preview">
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      marginTop: "10px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    Nueva imagen:
+                  </p>
                   <img
                     src={URL.createObjectURL(imageFile[0])}
                     alt="Vista previa"
                     style={{
                       maxWidth: "200px",
                       maxHeight: "200px",
-                      marginTop: "10px",
                       borderRadius: "8px",
                       objectFit: "cover",
                     }}
@@ -294,18 +339,73 @@ const FormTour = () => {
             {/* Imágenes adicionales */}
             <div className="form-group">
               <label htmlFor="image_list">
-                Imágenes para galería <span className="required">*</span>
+                Imágenes para galería{" "}
+                {!isEditMode && <span className="required">*</span>}
               </label>
+              {isEditMode &&
+                currentSecondaryImages &&
+                currentSecondaryImages.length > 0 && (
+                  <div
+                    className="image-preview"
+                    style={{ marginBottom: "10px" }}
+                  >
+                    <p style={{ fontSize: "14px", marginBottom: "5px" }}>
+                      Imágenes actuales ({currentSecondaryImages.length}):
+                    </p>
+                    <div
+                      style={{
+                        maxHeight: "250px",
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                        padding: "5px",
+                        border: "1px solid #d1d1d1",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "10px",
+                          flexWrap: "wrap",
+                        }}
+                      >
+                        {currentSecondaryImages.map((imgUrl, index) => (
+                          <img
+                            key={index}
+                            src={imgUrl}
+                            alt={`Imagen ${index + 1}`}
+                            style={{
+                              maxWidth: "150px",
+                              maxHeight: "150px",
+                              borderRadius: "8px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "12px",
+                        color: "#666",
+                        marginTop: "10px",
+                      }}
+                    >
+                      Puedes agregar más imágenes a continuación
+                    </p>
+                  </div>
+                )}
               <input
                 type="file"
                 id="image_list"
                 accept="image/*"
                 multiple
                 {...register("image_list", {
-                  required: "Las imágenes de galería son requeridas",
+                  required:
+                    !isEditMode && "Las imágenes de galería son requeridas",
                   validate: {
                     minImages: (files) => {
-                      if (!files || files.length < 5) {
+                      if (!isEditMode && (!files || files.length < 3)) {
                         return "Debes seleccionar al menos 3 imágenes para la galería";
                       }
                       return true;
@@ -351,6 +451,8 @@ const FormTour = () => {
             text={
               sending ? (
                 <MoonLoader color="#fff" size={16} />
+              ) : isEditMode ? (
+                "Actualizar destino"
               ) : (
                 "Guardar destino"
               )

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useRecomendations from "../hooks/useRecomendations";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Pagination from "../components/Pagination";
 import ModalConfirm from "../components/ModalConfirm";
@@ -17,6 +17,7 @@ const Admin = () => {
     goToPage,
     goToFirstPage,
   } = useRecomendations({}, 10);
+  const navigate = useNavigate();
   const { notify } = useNotification();
 
   const [showModal, setShowModal] = useState(false);
@@ -61,12 +62,10 @@ const Admin = () => {
                   <td>{destination.id}</td>
                   <td>{destination.name}</td>
                   <td>
-                    {/*<Button
-                    text="Editar"
-                    onClick={() =>
-                      navigate(`/admin/destinations/${destination.id}`)
-                    }
-                  />*/}
+                    <Button
+                      text="Editar"
+                      onClick={() => navigate(`/edit-tour/${destination.id}`)}
+                    />
                     <Button
                       text="Eliminar"
                       onClick={() => {

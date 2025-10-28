@@ -1,11 +1,19 @@
 import { useForm } from "react-hook-form";
-import { createDestination } from "../services/destino.service";
+import {
+  createDestination,
+  updateDestination,
+  getDestinationById,
+} from "../services/destino.service";
 import { useNotification } from "../context/useNotificationProvider";
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
+import { useParams } from "react-router-dom";
 
 const useFormTour = () => {
+  const { id } = useParams();
+  const isEditMode = Boolean(id);
+
   const {
     register,
     handleSubmit,
@@ -13,6 +21,7 @@ const useFormTour = () => {
     reset,
     control,
     watch,
+    setValue,
   } = useForm({
     defaultValues: {
       name: "",
@@ -31,6 +40,66 @@ const useFormTour = () => {
 
   const { notify } = useNotification();
   const [sending, setSending] = useState(false);
+  const [loading, setLoading] = useState(isEditMode);
+  const [currentImageUrl, setCurrentImageUrl] = useState("");
+  const [currentSecondaryImages, setCurrentSecondaryImages] = useState([]);
+
+  const languages = useMemo(
+    () => [
+      { value: "SPANISH", label: "Español" },
+      { value: "ENGLISH", label: "Inglés" },
+      { value: "FRENCH", label: "Francés" },
+    ],
+    []
+  );
+
+  // Cargar datos del destino cuando esté en modo edición
+  useEffect(() => {
+    if (isEditMode && id) {
+      const loadDestination = async () => {
+        try {
+          setLoading(true);
+          const destination = await getDestinationById(id);
+
+          // Guardar las URLs de las imágenes actuales
+          setCurrentImageUrl(destination.imageUrl || "");
+          setCurrentSecondaryImages(destination.secondaryImages || []);
+
+          // Mapear los datos del destino al formulario
+          setValue("name", destination.name || "");
+          setValue("price", destination.precio || "");
+          setValue("duration", destination.duration_time || "");
+          setValue("description", destination.description || "");
+          setValue("location", destination.location || "");
+          setValue("category", destination.category || "FRANCE");
+          setValue("score", destination.punctuation || "");
+          setValue("city", destination.city || "");
+
+          // Mapear idiomas
+          if (destination.languages && Array.isArray(destination.languages)) {
+            const mappedLanguages = destination.languages.map(
+              (lang) =>
+                languages.find((l) => l.value === lang) || {
+                  value: lang,
+                  label: lang,
+                }
+            );
+            setValue("languages", mappedLanguages);
+          }
+        } catch (error) {
+          console.error("Error loading destination:", error);
+          notify({
+            message: "Error al cargar los datos del destino",
+            type: "error",
+          });
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadDestination();
+    }
+  }, [id, isEditMode, setValue, notify, languages]);
 
   const onSubmit = async (data) => {
     setSending(true);
@@ -75,21 +144,31 @@ const useFormTour = () => {
     }
 
     try {
-      await createDestination(dataToSend);
-      notify({
-        message: "¡Destino guardado correctamente!",
-        type: "success",
-      });
-      reset(); // Limpiar el formulario
+      if (isEditMode) {
+        await updateDestination(id, dataToSend);
+        notify({
+          message: "¡Destino actualizado correctamente!",
+          type: "success",
+        });
+      } else {
+        await createDestination(dataToSend);
+        notify({
+          message: "¡Destino guardado correctamente!",
+          type: "success",
+        });
+        reset(); // Limpiar el formulario solo en modo creación
+      }
     } catch (error) {
-      if (error.response.data.message) {
+      if (error.response?.data?.message) {
         notify({
           message: error.response.data.message,
           type: "error",
         });
       } else {
         notify({
-          message: "Hubo un error al guardar el destino.",
+          message: isEditMode
+            ? "Hubo un error al actualizar el destino."
+            : "Hubo un error al guardar el destino.",
           type: "error",
         });
       }
@@ -98,21 +177,19 @@ const useFormTour = () => {
     }
   };
 
-  const languages = [
-    { value: "SPANISH", label: "Español" },
-    { value: "ENGLISH", label: "Inglés" },
-    { value: "FRENCH", label: "Francés" },
-  ];
-
   return {
     register,
     handleSubmit,
     errors,
     onSubmit,
     sending,
+    loading,
+    isEditMode,
     languages,
     control,
     watch,
+    currentImageUrl,
+    currentSecondaryImages,
   };
 };
 

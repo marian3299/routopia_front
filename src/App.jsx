@@ -59,6 +59,14 @@ function App() {
               }
             />
             <Route
+              path="/edit-tour/:id"
+              element={
+                <ProtectedRoute adminOnly={true}>
+                  <FormTour />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/admin"
               element={
                 <ProtectedRoute adminOnly={true}>

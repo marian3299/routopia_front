@@ -51,6 +51,20 @@ export const createDestination = async (formData) => {
   }
 };
 
+export const updateDestination = async (id, formData) => {
+  try {
+    const response = await api.put(URLS.UPDATE_DESTINATION(id), formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating destination:", error);
+    throw error;
+  }
+};
+
 export const deleteDestination = async (id) => {
   try {
     const response = await api.delete(URLS.DELETE_DESTINATION(id));
