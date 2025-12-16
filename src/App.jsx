@@ -11,7 +11,9 @@ import Register from "./routes/Register";
 import Profile from "./routes/Profile";
 import { AuthProvider } from "./context/AuthContext";
 import Admin from "./routes/Admin";
+import Users from "./routes/Users";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { PERMISSIONS } from "./constants/permissions";
 
 function App() {
   return (
@@ -58,11 +60,13 @@ function App() {
               }
             />
 
-            {/* Rutas solo para ADMIN */}
+            {/* Rutas con permisos específicos */}
             <Route
               path="/new-tour"
               element={
-                <ProtectedRoute adminOnly={true}>
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.DESTINOS.CREATE}
+                >
                   <FormTour />
                 </ProtectedRoute>
               }
@@ -70,7 +74,7 @@ function App() {
             <Route
               path="/edit-tour/:id"
               element={
-                <ProtectedRoute adminOnly={true}>
+                <ProtectedRoute requiredPermission={PERMISSIONS.DESTINOS.EDIT}>
                   <FormTour />
                 </ProtectedRoute>
               }
@@ -78,8 +82,16 @@ function App() {
             <Route
               path="/admin"
               element={
-                <ProtectedRoute adminOnly={true}>
+                <ProtectedRoute requiredPermission={PERMISSIONS.DESTINOS.VIEW}>
                   <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute requiredPermission={PERMISSIONS.USERS.MANAGE}>
+                  <Users />
                 </ProtectedRoute>
               }
             />

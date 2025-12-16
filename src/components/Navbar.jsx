@@ -5,10 +5,13 @@ import NavbarStyles from "../styles/Navbar.module.css";
 import { FaLocationDot } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { usePermissions } from "../hooks/usePermissions";
+import { PERMISSIONS } from "../constants/permissions";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { hasPermission } = usePermissions();
 
   return (
     <nav>
@@ -19,14 +22,22 @@ const Navbar = () => {
       <div className={NavbarStyles.buttonContainer}>
         {user && (
           <>
-            <Button
-              text="Agregar destino"
-              onClick={() => navigate("/new-tour")}
-            />
-            {user.role === "ADMIN" && (
+            {hasPermission(PERMISSIONS.DESTINOS.CREATE) && (
+              <Button
+                text="Agregar destino"
+                onClick={() => navigate("/new-tour")}
+              />
+            )}
+            {hasPermission(PERMISSIONS.DESTINOS.VIEW) && (
               <Button
                 text="Lista de destinos"
                 onClick={() => navigate("/admin")}
+              />
+            )}
+            {hasPermission(PERMISSIONS.USERS.MANAGE) && (
+              <Button
+                text="Lista de usuarios"
+                onClick={() => navigate("/users")}
               />
             )}
           </>

@@ -1,10 +1,16 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { usePermissions } from "../hooks/usePermissions";
 
-const ProtectedRoute = ({ children, adminOnly = false }) => {
+const ProtectedRoute = ({
+  children,
+  adminOnly = false,
+  requiredPermission = null,
+  requiredPermissions = [], // Array de permisos (requiere todos)
+}) => {
   const { user, loading } = useAuth();
+  const { hasPermission, hasAllPermissions } = usePermissions();
 
-  // Mostrar loading mientras se verifica la autenticación
   if (loading) {
     return (
       <div className="main-container">
@@ -15,22 +21,28 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
     );
   }
 
-  // Si no hay usuario, redirigir al login
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Si requiere admin y el usuario no es admin, redirigir según su rol
-  if (adminOnly && user.role !== "ADMIN") {
-    return <Navigate to="/admin" replace />;
-  }
-
-  // Si es USER e intenta acceder a rutas restringidas, redirigir al home
-  if (user.role === "USER" && adminOnly) {
+  // Verificar permiso único
+  if (requiredPermission && !hasPermission(requiredPermission)) {
     return <Navigate to="/" replace />;
   }
 
-  // Si todo está bien, mostrar el componente hijo
+  // Verificar múltiples permisos (requiere todos)
+  if (
+    requiredPermissions.length > 0 &&
+    !hasAllPermissions(requiredPermissions)
+  ) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Verificar si requiere admin
+  if (adminOnly && user.role !== "ADMIN") {
+    return <Navigate to="/" replace />;
+  }
+
   return children;
 };
 

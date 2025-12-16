@@ -8,13 +8,25 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const logout = () => {
+    Cookies.remove("token");
+    setUser(null);
+  };
+
   //Revisar si hay token guardado
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
       api
         .get("/auth/me")
-        .then((res) => setUser(res.data))
+        .then((res) => {
+          // Asegurar que permissions siempre sea un array
+          const userData = {
+            ...res.data,
+            permissions: res.data.permissions || [],
+          };
+          setUser(userData);
+        })
         .catch(() => logout())
         .finally(() => setLoading(false));
     } else {
@@ -24,9 +36,15 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const res = await api.post("/auth/login", { email, password });
-    const { token, role, nombre, apellido } = res.data;
+    const { token, role, nombre, apellido, permissions } = res.data;
     Cookies.set("token", token, { expires: 7 });
-    const userData = { email, role, nombre, apellido };
+    const userData = {
+      email,
+      role,
+      nombre,
+      apellido,
+      permissions: permissions || [],
+    };
     setUser(userData);
     return userData;
   };
@@ -38,16 +56,17 @@ export const AuthProvider = ({ children }) => {
       email,
       password,
     });
-    const { token, role } = res.data;
+    const { token, role, permissions } = res.data;
     Cookies.set("token", token, { expires: 7 });
-    const userData = { email, role, nombre, apellido };
+    const userData = {
+      email,
+      role,
+      nombre,
+      apellido,
+      permissions: permissions || [],
+    };
     setUser(userData);
     return userData;
-  };
-
-  const logout = () => {
-    Cookies.remove("token");
-    setUser(null);
   };
 
   return (
