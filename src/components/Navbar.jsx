@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "./Button";
+import UserAvatar from "./UserAvatar";
 import NavbarStyles from "../styles/Navbar.module.css";
 import { FaLocationDot } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +8,8 @@ import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+
   return (
     <nav>
       <div className={NavbarStyles.logoContainer} onClick={() => navigate("/")}>
@@ -15,9 +17,19 @@ const Navbar = () => {
         <p>Rutopia</p>
       </div>
       <div className={NavbarStyles.buttonContainer}>
-        <Button text="Agregar destino" onClick={() => navigate("/new-tour")} />
-        {user && user.role == "ADMIN" && (
-          <Button text="Lista de destinos" onClick={() => navigate("/admin")} />
+        {user && (
+          <>
+            <Button
+              text="Agregar destino"
+              onClick={() => navigate("/new-tour")}
+            />
+            {user.role === "ADMIN" && (
+              <Button
+                text="Lista de destinos"
+                onClick={() => navigate("/admin")}
+              />
+            )}
+          </>
         )}
         {!user && (
           <>
@@ -29,13 +41,7 @@ const Navbar = () => {
             />
           </>
         )}
-        {user && (
-          <Button
-            type="primary"
-            text="Cerrar sesión"
-            onClick={() => logout()}
-          />
-        )}
+        {user && <UserAvatar />}
       </div>
     </nav>
   );

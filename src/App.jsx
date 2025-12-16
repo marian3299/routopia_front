@@ -8,6 +8,7 @@ import Category from "./routes/Category";
 import FormTour from "./routes/FormTour";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
+import Profile from "./routes/Profile";
 import { AuthProvider } from "./context/AuthContext";
 import Admin from "./routes/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -45,6 +46,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Category />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               }
             />
