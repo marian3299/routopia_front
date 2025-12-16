@@ -15,7 +15,12 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const userData = await register(data.username, data.email, data.password);
+      const userData = await register(
+        data.nombre,
+        data.apellido,
+        data.email,
+        data.password
+      );
       navigate(userData.role === "ADMIN" ? "/admin" : "/");
     } catch (err) {
       console.log(err);
@@ -30,30 +35,52 @@ function Register() {
         <div className="form-section auth-card">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
+              <label htmlFor="nombre">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Tu nombre"
+                {...registerForm("nombre", {
+                  required: "El nombre es requerido",
+                })}
+              />
+              {errors.nombre && (
+                <span className="error">{errors.nombre.message}</span>
+              )}
+            </div>
+            <div className="form-group">
+              <label htmlFor="apellido">Apellido</label>
+              <input
+                type="text"
+                id="apellido"
+                name="apellido"
+                placeholder="Tu apellido"
+                {...registerForm("apellido", {
+                  required: "El apellido es requerido",
+                })}
+              />
+              {errors.apellido && (
+                <span className="error">{errors.apellido.message}</span>
+              )}
+            </div>
+            <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
-                type="email"
                 id="email"
                 name="email"
                 placeholder="tu@email.com"
                 {...registerForm("email", {
                   required: "El email es requerido",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "El email no es válido",
+                  },
                 })}
-                required
               />
-            </div>
-            <div className="form-group">
-              <label htmlFor="username">Usuario</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="tu_usuario"
-                {...registerForm("username", {
-                  required: "El usuario es requerido",
-                })}
-                required
-              />
+              {errors.email && (
+                <span className="error">{errors.email.message}</span>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
@@ -64,9 +91,15 @@ function Register() {
                 placeholder="••••••••"
                 {...registerForm("password", {
                   required: "La contraseña es requerida",
+                  minLength: {
+                    value: 6,
+                    message: "La contraseña debe tener al menos 6 caracteres",
+                  },
                 })}
-                required
               />
+              {errors.password && (
+                <span className="error">{errors.password.message}</span>
+              )}
             </div>
             {errors.root && (
               <span className="error">{errors.root.message}</span>

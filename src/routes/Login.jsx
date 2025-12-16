@@ -15,7 +15,7 @@ function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const userData = await login(data.username, data.password);
+      const userData = await login(data.email, data.password);
       navigate(userData.role === "ADMIN" ? "/admin" : "/");
     } catch (err) {
       console.log(err);
@@ -30,14 +30,14 @@ function Login() {
         <div className="form-section auth-card">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label htmlFor="username">Usuario</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="text"
-                id="username"
-                name="username"
-                placeholder="tu_usuario"
-                {...register("username", {
-                  required: "El usuario es requerido",
+                id="email"
+                name="email"
+                placeholder="tu@email.com"
+                {...register("email", {
+                  required: "El email es requerido",
                 })}
                 required
               />

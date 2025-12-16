@@ -22,20 +22,25 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = async (username, password) => {
-    const res = await api.post("/auth/login", { username, password });
-    const { token, username: name, email, role } = res.data;
+  const login = async (email, password) => {
+    const res = await api.post("/auth/login", { email, password });
+    const { token, role } = res.data;
     Cookies.set("token", token, { expires: 7 });
-    const userData = { username: name, email, role };
+    const userData = { email, role };
     setUser(userData);
     return userData;
   };
 
-  const register = async (username, email, password) => {
-    const res = await api.post("/auth/register", { username, email, password });
-    const { token, username: name, role } = res.data;
+  const register = async (nombre, apellido, email, password) => {
+    const res = await api.post("/auth/register", {
+      nombre,
+      apellido,
+      email,
+      password,
+    });
+    const { token, role } = res.data;
     Cookies.set("token", token, { expires: 7 });
-    const userData = { username: name, email, role };
+    const userData = { email, role };
     setUser(userData);
     return userData;
   };
