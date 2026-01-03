@@ -69,8 +69,8 @@ const useUsers = () => {
 
     setSaving(true);
     try {
-      // Enviar todos los permisos como un array
-      await api.post(`/users/${selectedUser.id}/permissions`, {
+      // Enviar todos los permisos como un array usando PUT
+      await api.put(`/users/${selectedUser.id}/permissions`, {
         permissions: tempPermissions,
       });
 
