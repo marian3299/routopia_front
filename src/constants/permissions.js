@@ -8,7 +8,6 @@ export const PERMISSIONS = {
   },
   USERS: {
     VIEW: "users:view",
-    MANAGE: "users:manage", // Otorgar/quitar permisos
   },
   // Para futuras secciones:
   // RESERVATIONS: { VIEW: "reservations:view", ... },

@@ -20,7 +20,7 @@ const Users = () => {
   } = useUsers();
 
   // Solo mostrar si tiene permiso para gestionar usuarios
-  if (!hasPermission(PERMISSIONS.USERS.MANAGE)) {
+  if (!hasPermission(PERMISSIONS.USERS.VIEW)) {
     return (
       <div className="admin-container">
         <p>No tienes permisos para acceder a esta sección.</p>
@@ -159,19 +159,21 @@ const Users = () => {
                     </div>
                   ))}
                 </div>
-                <div className="permissions-save-container">
-                  <button
-                    className="permissions-save-button"
-                    onClick={handleSavePermissions}
-                    disabled={
-                      !hasUnsavedChanges() ||
-                      saving ||
-                      selectedUser?.role === "ADMIN"
-                    }
-                  >
-                    {saving ? "Guardando..." : "Guardar"}
-                  </button>
-                </div>
+                {!hasPermission(PERMISSIONS.USERS.VIEW) && (
+                  <div className="permissions-save-container">
+                    <button
+                      className="permissions-save-button"
+                      onClick={handleSavePermissions}
+                      disabled={
+                        !hasUnsavedChanges() ||
+                        saving ||
+                        selectedUser?.role === "ADMIN"
+                      }
+                    >
+                      {saving ? "Guardando..." : "Guardar"}
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -34,7 +34,7 @@ const Navbar = () => {
                 onClick={() => navigate("/admin")}
               />
             )}
-            {hasPermission(PERMISSIONS.USERS.MANAGE) && (
+            {hasPermission(PERMISSIONS.USERS.VIEW) && (
               <Button
                 text="Lista de usuarios"
                 onClick={() => navigate("/users")}
