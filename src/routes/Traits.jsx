@@ -5,8 +5,7 @@ import TraitsForm from "../components/TraitsForm";
 import Button from "../components/Button";
 
 const Traits = () => {
-  const { selectedTrait, setSelectedTrait, handleOpenForm, openForm } =
-    useTraits();
+  const { selectedTrait, handleOpenForm, openForm } = useTraits();
   return (
     <div className="users-container">
       <div className="users-list-container">
@@ -21,7 +20,7 @@ const Traits = () => {
         </div>
         <TraitsList
           selectedTrait={selectedTrait}
-          setSelectedTrait={setSelectedTrait}
+          handleOpenForm={handleOpenForm}
         />
       </div>
 

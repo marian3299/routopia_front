@@ -11,7 +11,6 @@ const useTraits = () => {
 
   return {
     selectedTrait,
-    setSelectedTrait,
     openForm,
     handleOpenForm,
   };

@@ -1,7 +1,7 @@
 import React from "react";
 import useTraitsList from "../hooks/useTraitsList";
 
-const TraitsList = ({ selectedTrait, setSelectedTrait }) => {
+const TraitsList = ({ selectedTrait, handleOpenForm }) => {
   const { searchTerm, setSearchTerm, filteredTraits, loading } =
     useTraitsList();
   return (
@@ -27,7 +27,7 @@ const TraitsList = ({ selectedTrait, setSelectedTrait }) => {
               className={`user-item ${
                 selectedTrait?.id === trait.id ? "active" : ""
               }`}
-              onClick={() => setSelectedTrait(trait)}
+              onClick={() => handleOpenForm(trait)}
             >
               <div className="user-item-content">
                 <span className="user-email">{trait.name}</span>

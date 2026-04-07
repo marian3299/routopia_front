@@ -7,6 +7,7 @@ import { MoonLoader } from "react-spinners";
 const TraitsForm = ({ selectedTrait }) => {
   const {
     register,
+    imageRegister,
     onSubmit,
     handleSubmit,
     errors,
@@ -25,35 +26,6 @@ const TraitsForm = ({ selectedTrait }) => {
   const handleClick = () => {
     fileInputRef.current?.click();
   };
-
-  // Registrar el input con validaciones
-  const imageRegister = register("image", {
-    required: "La imagen es requerida",
-    validate: {
-      fileSize: (files) => {
-        if (files && files[0]) {
-          const fileSize = files[0].size / 1024 / 1024; // Convertir a MB
-          return fileSize <= 5 || "La imagen debe ser menor a 5MB";
-        }
-        return true;
-      },
-      fileType: (files) => {
-        if (files && files[0]) {
-          const validTypes = [
-            "image/jpeg",
-            "image/jpg",
-            "image/png",
-            "image/webp",
-          ];
-          return (
-            validTypes.includes(files[0].type) ||
-            "Solo se permiten archivos JPG, PNG o WEBP"
-          );
-        }
-        return true;
-      },
-    },
-  });
 
   return (
     <div className="permissions-card">

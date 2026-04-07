@@ -28,11 +28,15 @@ const useTraitsForm = ({ selectedTrait }) => {
   useEffect(() => {
     if (selectedTrait) {
       setValue("name", selectedTrait?.name);
-      setImagePreview(selectedTrait?.image);
+      setImagePreview(selectedTrait?.imageUrl);
+      setValue("image", null);
     } else {
       setValue("name", "");
       setImagePreview(null);
+      setValue("image", null);
     }
+    const fileInput = document.getElementById("trait-image");
+    if (fileInput) fileInput.value = "";
   }, [selectedTrait, setValue]);
 
   // Manejar la selección de archivo
@@ -109,7 +113,7 @@ const useTraitsForm = ({ selectedTrait }) => {
     }
   }, [setValue]);
 
-  // Actualizar preview cuando cambia el archivo
+  // Vista previa solo cuando el usuario elige un archivo nuevo (no pisar la imagen del servidor)
   React.useEffect(() => {
     if (imageFile && imageFile.length > 0) {
       const file = imageFile[0];
@@ -120,8 +124,6 @@ const useTraitsForm = ({ selectedTrait }) => {
         };
         reader.readAsDataURL(file);
       }
-    } else if (!imageFile || imageFile.length === 0) {
-      setImagePreview(null);
     }
   }, [imageFile]);
 
@@ -129,7 +131,10 @@ const useTraitsForm = ({ selectedTrait }) => {
     setSending(true);
     const dataToSend = new FormData();
     dataToSend.append("name", data.name);
-    dataToSend.append("image", data.image[0]);
+    const newImage = data.image?.length > 0 ? data.image[0] : null;
+    if (newImage) {
+      dataToSend.append("image", newImage);
+    }
     try {
       if (selectedTrait) {
         await updateTrait(selectedTrait.id, dataToSend);
@@ -155,8 +160,42 @@ const useTraitsForm = ({ selectedTrait }) => {
     }
   };
 
+  const imageRegister = register("image", {
+    validate: {
+      required: (files) => {
+        const hasNewFile = files && files.length > 0 && files[0];
+        if (hasNewFile) return true;
+        if (selectedTrait?.imageUrl && imagePreview) return true;
+        return "La imagen es requerida";
+      },
+      fileSize: (files) => {
+        if (files && files[0]) {
+          const fileSize = files[0].size / 1024 / 1024;
+          return fileSize <= 5 || "La imagen debe ser menor a 5MB";
+        }
+        return true;
+      },
+      fileType: (files) => {
+        if (files && files[0]) {
+          const validTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/webp",
+          ];
+          return (
+            validTypes.includes(files[0].type) ||
+            "Solo se permiten archivos JPG, PNG o WEBP"
+          );
+        }
+        return true;
+      },
+    },
+  });
+
   return {
     register,
+    imageRegister,
     handleSubmit,
     errors,
     onSubmit,
