@@ -1,5 +1,11 @@
 // Sistema de permisos granular por sección y acción
 export const PERMISSIONS = {
+  TRAITS: {
+    VIEW: "traits:view",
+    CREATE: "traits:create",
+    EDIT: "traits:edit",
+    DELETE: "traits:delete",
+  },
   DESTINOS: {
     VIEW: "destinos:view",
     CREATE: "destinos:create",

@@ -40,6 +40,12 @@ const Navbar = () => {
                 onClick={() => navigate("/users")}
               />
             )}
+            {hasPermission(PERMISSIONS.TRAITS.VIEW) && (
+              <Button
+                text="Lista de características"
+                onClick={() => navigate("/traits")}
+              />
+            )}
           </>
         )}
         {!user && (

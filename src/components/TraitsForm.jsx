@@ -1,0 +1,150 @@
+import React, { useRef } from "react";
+import useTraitsForm from "../hooks/useTraitsForm";
+import { FaTrash } from "react-icons/fa";
+import Button from "./Button";
+import { MoonLoader } from "react-spinners";
+
+const TraitsForm = ({ selectedTrait }) => {
+  const {
+    register,
+    onSubmit,
+    handleSubmit,
+    errors,
+    imagePreview,
+    isDragging,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleInputChange,
+    handleRemoveImage,
+    sending,
+  } = useTraitsForm({ selectedTrait });
+
+  const fileInputRef = useRef(null);
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  // Registrar el input con validaciones
+  const imageRegister = register("image", {
+    required: "La imagen es requerida",
+    validate: {
+      fileSize: (files) => {
+        if (files && files[0]) {
+          const fileSize = files[0].size / 1024 / 1024; // Convertir a MB
+          return fileSize <= 5 || "La imagen debe ser menor a 5MB";
+        }
+        return true;
+      },
+      fileType: (files) => {
+        if (files && files[0]) {
+          const validTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/webp",
+          ];
+          return (
+            validTypes.includes(files[0].type) ||
+            "Solo se permiten archivos JPG, PNG o WEBP"
+          );
+        }
+        return true;
+      },
+    },
+  });
+
+  return (
+    <div className="permissions-card">
+      <div className="permissions-header">
+        <h2>{selectedTrait?.name || "Nueva característica"}</h2>
+      </div>
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-group">
+            <label htmlFor="name">
+              Nombre <span className="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              {...register("name", { required: "El nombre es requerido" })}
+            />
+            {errors.name && (
+              <span className="error">{errors.name.message}</span>
+            )}
+          </div>
+          <div className="form-group">
+            <label htmlFor="trait-image">
+              Imagen <span className="required">*</span>
+            </label>
+            {!imagePreview ? (
+              <div
+                onClick={handleClick}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`image-upload-area ${isDragging ? "dragging" : ""}`}
+              >
+                <p className="image-upload-text">
+                  Arrastre o de click para agregar imagen
+                </p>
+              </div>
+            ) : (
+              <div className="image-preview-container">
+                <img
+                  src={imagePreview}
+                  alt="Vista previa"
+                  className="image-preview"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="image-remove-button"
+                  aria-label="Eliminar imagen"
+                >
+                  <FaTrash size={14} />
+                </button>
+              </div>
+            )}
+            <input
+              type="file"
+              id="trait-image"
+              accept="image/*"
+              {...imageRegister}
+              ref={(e) => {
+                fileInputRef.current = e;
+                imageRegister.ref(e);
+              }}
+              onChange={(e) => {
+                imageRegister.onChange(e);
+                handleInputChange(e);
+              }}
+              style={{ display: "none" }}
+            />
+            {errors.image && (
+              <span className="error">{errors.image.message}</span>
+            )}
+          </div>
+          <Button
+            className="form-button"
+            text={
+              sending ? (
+                <MoonLoader color="#fff" size={16} />
+              ) : selectedTrait ? (
+                "Actualizar característica"
+              ) : (
+                "Guardar característica"
+              )
+            }
+            type="submit"
+            disabled={sending}
+          />
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default TraitsForm;

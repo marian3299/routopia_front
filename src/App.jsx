@@ -12,6 +12,7 @@ import Profile from "./routes/Profile";
 import { AuthProvider } from "./context/AuthContext";
 import Admin from "./routes/Admin";
 import Users from "./routes/Users";
+import Traits from "./routes/Traits";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { PERMISSIONS } from "./constants/permissions";
 
@@ -92,6 +93,14 @@ function App() {
               element={
                 <ProtectedRoute requiredPermission={PERMISSIONS.USERS.MANAGE}>
                   <Users />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/traits"
+              element={
+                <ProtectedRoute requiredPermission={PERMISSIONS.TRAITS.VIEW}>
+                  <Traits />
                 </ProtectedRoute>
               }
             />
