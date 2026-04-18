@@ -15,7 +15,12 @@ const useTourDetail = () => {
     dispatch(getDestinationDetail(id));
   }, [id]);
 
-  return { destination, fetching_destination };
+  const carouserImages = [
+    destination?.imageUrl,
+    ...(destination?.secondaryImages || []),
+  ].slice(0, 4);
+
+  return { destination, fetching_destination, carouserImages };
 };
 
 export default useTourDetail;

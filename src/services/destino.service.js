@@ -1,25 +1,35 @@
 //Destinos
-import axios from "axios";
+import api from "./api";
 import { URLS } from "./urls";
 
-export const getDestinations = async (query = "") => {
+export const getDestinations = async (query = {}) => {
   try {
-    const response = await axios.get(
-      `${URLS.GET_DESTINATIONS}${query ? `${query}` : ""}`
-    );
+    let queryString = "";
+    if (query && Object.keys(query).length > 0) {
+      const params = new URLSearchParams();
+      Object.entries(query).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          params.append(key, value);
+        }
+      });
+      queryString = params.toString();
+    }
+
+    const url = queryString
+      ? `${URLS.GET_DESTINATIONS}?${queryString}`
+      : URLS.GET_DESTINATIONS;
+
+    const response = await api.get(url);
     return response.data;
   } catch (error) {
     console.error("Error fetching destinations:", error);
-    // Es una buena práctica relanzar el error o devolver un valor
-    // que indique que la operación falló, para que el componente
-    // que llama a esta función pueda manejarlo.
     throw error;
   }
 };
 
 export const getDestinationById = async (id) => {
   try {
-    const response = await axios.get(URLS.GET_DESTINATION_BY_ID(id));
+    const response = await api.get(URLS.GET_DESTINATION_BY_ID(id));
     return response.data;
   } catch (error) {
     console.error("Error fetching destination:", error);
@@ -29,7 +39,7 @@ export const getDestinationById = async (id) => {
 
 export const createDestination = async (formData) => {
   try {
-    const response = await axios.post(URLS.CREATE_DESTINATION, formData, {
+    const response = await api.post(URLS.CREATE_DESTINATION, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -37,6 +47,30 @@ export const createDestination = async (formData) => {
     return response.data;
   } catch (error) {
     console.error("Error creating destination:", error);
+    throw error;
+  }
+};
+
+export const updateDestination = async (id, formData) => {
+  try {
+    const response = await api.put(URLS.UPDATE_DESTINATION(id), formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating destination:", error);
+    throw error;
+  }
+};
+
+export const deleteDestination = async (id) => {
+  try {
+    const response = await api.delete(URLS.DELETE_DESTINATION(id));
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting destination:", error);
     throw error;
   }
 };

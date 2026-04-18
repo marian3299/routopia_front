@@ -10,6 +10,9 @@ const cases = {
   SET_FETCHING_DESTINATIONS: "setFetchingDestinations",
   SET_DESTINATION: "setDestination",
   SET_FETCHING_DESTINATION: "setFetchingDestination",
+  SET_SEARCH: "setSearch",
+  SET_HAS_SEARCH: "setHasSearch",
+  SET_INPUT_SEARCH: "setInputSearch",
 };
 
 const reducers = {
@@ -17,6 +20,9 @@ const reducers = {
   [cases.SET_FETCHING_DESTINATIONS]: commonAction,
   [cases.SET_DESTINATION]: commonAction,
   [cases.SET_FETCHING_DESTINATION]: commonAction,
+  [cases.SET_SEARCH]: commonAction,
+  [cases.SET_HAS_SEARCH]: commonAction,
+  [cases.SET_INPUT_SEARCH]: commonAction,
 };
 
 export default reducers;

@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { getDestinationsList } from "../redux/routopiaActions";
 import { useParams } from "react-router-dom";
+import usePagination from "./usePagination";
 
-const useCategory = () => {
+const useCategory = (initialQuery = {}, pageSize = 10) => {
   const { destinations, fetching_destinations } = useAppSelector(
     (state) => state.routopiaStore
   );
@@ -11,8 +12,17 @@ const useCategory = () => {
 
   const { type } = useParams();
 
+  const pagination = usePagination(
+    (query, page, size) => {
+      return dispatch(getDestinationsList(query, page, size));
+    },
+    0,
+    pageSize,
+    { ...initialQuery, category: type }
+  );
+
   useEffect(() => {
-    dispatch(getDestinationsList(`?category=${type}`));
+    pagination.goToPage(0);
   }, [type]);
 
   const getCategoryName = () => {
