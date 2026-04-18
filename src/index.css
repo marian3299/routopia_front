@@ -137,6 +137,17 @@ button:hover {
   color: #1a1a1a;
 }
 
+.form-button.secondary {
+  background-color: #f5f5f5;
+  border: 2px solid #d1d1d1;
+  color: #1a1a1a;
+}
+
+.form-button.secondary:hover {
+  background-color: #f1d6bd;
+  border: 2px solid #f1d6bd;
+  color: white;
+}
 nav {
   display: flex;
   justify-content: space-between;
@@ -1596,4 +1607,10 @@ button:hover .btnArrow {
   background-color: #c82333;
   transform: scale(1.1);
   transition: all 0.2s ease;
+}
+
+.form-button-container {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
 }

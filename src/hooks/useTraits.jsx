@@ -9,10 +9,16 @@ const useTraits = () => {
     setSelectedTrait(trait);
   };
 
+  const onDeleteTrait = () => {
+    setSelectedTrait(null);
+    setOpenForm(false);
+  };
+
   return {
     selectedTrait,
     openForm,
     handleOpenForm,
+    onDeleteTrait,
   };
 };
 

@@ -4,7 +4,7 @@ import { FaTrash } from "react-icons/fa";
 import Button from "./Button";
 import { MoonLoader } from "react-spinners";
 
-const TraitsForm = ({ selectedTrait }) => {
+const TraitsForm = ({ selectedTrait, onDeleteTrait }) => {
   const {
     register,
     imageRegister,
@@ -19,7 +19,9 @@ const TraitsForm = ({ selectedTrait }) => {
     handleInputChange,
     handleRemoveImage,
     sending,
-  } = useTraitsForm({ selectedTrait });
+    handleDeleteTrait,
+    deleting,
+  } = useTraitsForm({ selectedTrait, onDeleteTrait });
 
   const fileInputRef = useRef(null);
 
@@ -99,20 +101,37 @@ const TraitsForm = ({ selectedTrait }) => {
               <span className="error">{errors.image.message}</span>
             )}
           </div>
-          <Button
-            className="form-button"
-            text={
-              sending ? (
-                <MoonLoader color="#fff" size={16} />
-              ) : selectedTrait ? (
-                "Actualizar característica"
-              ) : (
-                "Guardar característica"
-              )
-            }
-            type="submit"
-            disabled={sending}
-          />
+          <div className="form-button-container">
+            {selectedTrait && (
+              <Button
+                className="form-button secondary"
+                text={
+                  deleting ? (
+                    <MoonLoader color="#1a1a1a" size={16} />
+                  ) : (
+                    "Eliminar característica"
+                  )
+                }
+                onClick={handleDeleteTrait}
+                type="button"
+                disabled={deleting || sending}
+              />
+            )}
+            <Button
+              className="form-button"
+              text={
+                sending ? (
+                  <MoonLoader color="#fff" size={16} />
+                ) : selectedTrait ? (
+                  "Actualizar característica"
+                ) : (
+                  "Guardar característica"
+                )
+              }
+              type="submit"
+              disabled={sending || deleting}
+            />
+          </div>
         </form>
       </div>
     </div>

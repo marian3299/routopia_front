@@ -5,7 +5,8 @@ import TraitsForm from "../components/TraitsForm";
 import Button from "../components/Button";
 
 const Traits = () => {
-  const { selectedTrait, handleOpenForm, openForm } = useTraits();
+  const { selectedTrait, handleOpenForm, openForm, onDeleteTrait } =
+    useTraits();
   return (
     <div className="users-container">
       <div className="users-list-container">
@@ -25,7 +26,12 @@ const Traits = () => {
       </div>
 
       <div className="users-permissions-container">
-        {openForm ? <TraitsForm selectedTrait={selectedTrait} /> : null}
+        {openForm ? (
+          <TraitsForm
+            selectedTrait={selectedTrait}
+            onDeleteTrait={onDeleteTrait}
+          />
+        ) : null}
       </div>
     </div>
   );

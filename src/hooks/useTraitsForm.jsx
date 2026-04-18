@@ -1,12 +1,17 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { createTrait, updateTrait } from "../services/traits.service";
+import {
+  createTrait,
+  deleteTrait,
+  updateTrait,
+} from "../services/traits.service";
 import { useNotification } from "../context/useNotificationProvider";
 
-const useTraitsForm = ({ selectedTrait }) => {
+const useTraitsForm = ({ selectedTrait, onDeleteTrait }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [sending, setSending] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const { notify } = useNotification();
   const {
     register,
@@ -193,6 +198,26 @@ const useTraitsForm = ({ selectedTrait }) => {
     },
   });
 
+  const handleDeleteTrait = async () => {
+    try {
+      setDeleting(true);
+      await deleteTrait(selectedTrait?.id);
+      notify({
+        message: "¡Característica eliminada correctamente!",
+        type: "success",
+      });
+      onDeleteTrait();
+    } catch (error) {
+      console.error("Error deleting trait:", error);
+      notify({
+        message: "Hubo un error al eliminar la característica",
+        type: "error",
+      });
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return {
     register,
     imageRegister,
@@ -211,6 +236,8 @@ const useTraitsForm = ({ selectedTrait }) => {
     handleInputChange,
     handleRemoveImage,
     sending,
+    handleDeleteTrait,
+    deleting,
   };
 };
 
