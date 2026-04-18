@@ -31,6 +31,35 @@ const TourDetail = () => {
 
       <hr className="custom-divider" />
 
+      {(destination?.traits?.length ?? 0) > 0 && (
+        <section
+          className="tour-traits-section"
+          aria-labelledby="tour-traits-title"
+        >
+          <h2 id="tour-traits-title" className="tour-traits-heading">
+            Características del destino
+          </h2>
+          <div className="tour-traits-list">
+            {(destination.traits ?? []).map((trait) => (
+              <div key={trait.id} className="tour-trait">
+                {trait.imageUrl ? (
+                  <img
+                    src={trait.imageUrl}
+                    alt=""
+                    className="tour-trait-icon"
+                    width={28}
+                    height={28}
+                  />
+                ) : (
+                  <span className="tour-trait-icon-fallback" aria-hidden />
+                )}
+                <p className="tour-trait-name">{trait.name}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <div className="tour-description">
         <h1>Descripción general</h1>
         <p>{destination?.description}</p>

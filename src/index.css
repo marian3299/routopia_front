@@ -629,6 +629,73 @@ button:hover .btnArrow {
   align-items: flex-start;
 }
 
+/* Misma caja que .tour-description y .image-gallery (centrada, max 1240px) */
+.tour-traits-section {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tour-traits-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.tour-traits-underline {
+  height: 2px;
+  width: 100%;
+  background-color: #2dd4bf;
+  margin-bottom: 1.25rem;
+}
+
+.tour-traits-list {
+  display: grid;
+  width: 100%;
+  /* Reparte el 100% del ancho; más columnas en pantallas anchas, menos al estrechar */
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 200px), 1fr)
+  );
+  gap: 1rem 1.25rem;
+  align-items: start;
+}
+
+.tour-trait {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+}
+
+.tour-trait-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+}
+
+.tour-trait-icon-fallback {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background-color: #ccfbf1;
+  display: block;
+}
+
+.tour-trait-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
 .tour-description-card {
   display: flex;
   flex-direction: column;
@@ -672,6 +739,8 @@ button:hover .btnArrow {
   gap: 16px;
   max-width: 1240px;
   width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
 }
 .tour-description p {
   line-height: 1.5;
@@ -683,6 +752,8 @@ button:hover .btnArrow {
   gap: 16px;
   width: 100%;
   max-width: 1240px;
+  margin-inline: auto;
+  box-sizing: border-box;
 }
 
 .main-container {
