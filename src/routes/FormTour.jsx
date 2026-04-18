@@ -19,6 +19,7 @@ const FormTour = () => {
     watch,
     currentImageUrl,
     currentSecondaryImages,
+    traits,
   } = useFormTour();
 
   // Observar el campo de imagen para mostrar vista previa
@@ -155,6 +156,39 @@ const FormTour = () => {
                 <span className="error">{errors.description.message}</span>
               )}
             </div>
+            <div className="form-group">
+              <label htmlFor="traits">
+                Características <span className="required">*</span>
+              </label>
+              <Controller
+                name="traits"
+                control={control}
+                rules={{ required: "Las características son requeridas" }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    inputId="traits"
+                    options={traits}
+                    isMulti
+                    isSearchable={false}
+                    closeMenuOnSelect={false}
+                    placeholder="Seleccione las características"
+                    styles={customSelectStyles}
+                    onChange={(selected) =>
+                      field.onChange(selected ?? [])
+                    }
+                    value={traits.filter((option) =>
+                      (field.value ?? []).some(
+                        (val) => val.value === option.value,
+                      ),
+                    )}
+                  />
+                )}
+              />
+              {errors.traits && (
+                <span className="error">{errors.traits.message}</span>
+              )}
+            </div>
           </div>
 
           {/* Ubicación e idioma */}
@@ -180,7 +214,7 @@ const FormTour = () => {
                     styles={customSelectStyles}
                     onChange={(selected) => field.onChange(selected)}
                     value={languages.filter((option) =>
-                      field.value?.some((val) => val.value === option.value)
+                      field.value?.some((val) => val.value === option.value),
                     )}
                   />
                 )}

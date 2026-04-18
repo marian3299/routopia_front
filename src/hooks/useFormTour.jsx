@@ -5,10 +5,11 @@ import {
   getDestinationById,
 } from "../services/destino.service";
 import { useNotification } from "../context/useNotificationProvider";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
+import { getTraits } from "../services/traits.service";
 
 const useFormTour = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ const useFormTour = () => {
       duration: "",
       description: "",
       languages: [],
+      traits: [],
       location: "",
       category: "FRANCE",
       score: "",
@@ -43,6 +45,7 @@ const useFormTour = () => {
   const [loading, setLoading] = useState(isEditMode);
   const [currentImageUrl, setCurrentImageUrl] = useState("");
   const [currentSecondaryImages, setCurrentSecondaryImages] = useState([]);
+  const [traits, setTraits] = useState([]);
 
   const languages = useMemo(
     () => [
@@ -50,8 +53,27 @@ const useFormTour = () => {
       { value: "ENGLISH", label: "Inglés" },
       { value: "FRENCH", label: "Francés" },
     ],
-    []
+    [],
   );
+
+  const fetchTraits = useCallback(async () => {
+    try {
+      const res = await getTraits();
+      setTraits(
+        res.content.map((trait) => ({
+          value: trait.id,
+          label: trait.name,
+        })),
+      );
+    } catch (err) {
+      console.error("Error fetching traits:", err);
+      notify({ message: "Error al cargar características", type: "error" });
+    }
+  }, [notify]);
+
+  useEffect(() => {
+    fetchTraits();
+  }, [fetchTraits]);
 
   // Cargar datos del destino cuando esté en modo edición
   useEffect(() => {
@@ -82,9 +104,19 @@ const useFormTour = () => {
                 languages.find((l) => l.value === lang) || {
                   value: lang,
                   label: lang,
-                }
+                },
             );
             setValue("languages", mappedLanguages);
+          }
+
+          if (destination.traits && Array.isArray(destination.traits)) {
+            setValue(
+              "traits",
+              destination.traits.map((t) => ({
+                value: t.id,
+                label: t.name,
+              })),
+            );
           }
         } catch (error) {
           console.error("Error loading destination:", error);
@@ -130,6 +162,15 @@ const useFormTour = () => {
 
     // Agregar los idiomas seleccionados
     languagesArray.forEach((lang) => dataToSend.append("languages", lang));
+
+    // Traits: mismo patrón que languages — varias entradas "traits" con el ID (backend List<Long>)
+    const traitsSelection = Array.isArray(data.traits) ? data.traits : [];
+    traitsSelection.forEach((item) => {
+      const id = item?.value ?? item;
+      if (id !== undefined && id !== null && id !== "") {
+        dataToSend.append("traits", String(id));
+      }
+    });
 
     // Agregar la imagen si existe
     if (data.image && data.image[0]) {
@@ -190,6 +231,7 @@ const useFormTour = () => {
     watch,
     currentImageUrl,
     currentSecondaryImages,
+    traits,
   };
 };
 
