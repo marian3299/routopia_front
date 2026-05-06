@@ -46,6 +46,12 @@ const Navbar = () => {
                 onClick={() => navigate("/traits")}
               />
             )}
+            {hasPermission(PERMISSIONS.CHARACTERISTICS.VIEW) && (
+              <Button
+                text="Agregar categoría"
+                onClick={() => navigate("/categories")}
+              />
+            )}
           </>
         )}
         {!user && (

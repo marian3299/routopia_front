@@ -15,6 +15,12 @@ export const PERMISSIONS = {
   USERS: {
     VIEW: "users:view",
   },
+  CHARACTERISTICS: {
+    VIEW: "characteristics:view",
+    CREATE: "characteristics:create",
+    EDIT: "characteristics:edit",
+    DELETE: "characteristics:delete",
+  },
   // Para futuras secciones:
   // RESERVATIONS: { VIEW: "reservations:view", ... },
   // REPORTS: { VIEW: "reports:view", ... },

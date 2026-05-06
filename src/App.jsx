@@ -15,6 +15,7 @@ import Users from "./routes/Users";
 import Traits from "./routes/Traits";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { PERMISSIONS } from "./constants/permissions";
+import Characteristics from "./routes/Categories";
 
 function App() {
   return (
@@ -101,6 +102,16 @@ function App() {
               element={
                 <ProtectedRoute requiredPermission={PERMISSIONS.TRAITS.VIEW}>
                   <Traits />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/categories"
+              element={
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.CHARACTERISTICS.VIEW}
+                >
+                  <Characteristics />
                 </ProtectedRoute>
               }
             />
