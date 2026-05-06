@@ -8,7 +8,14 @@ export const getDestinations = async (query = {}) => {
     if (query && Object.keys(query).length > 0) {
       const params = new URLSearchParams();
       Object.entries(query).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== "") {
+        if (value === undefined || value === null || value === "") return;
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            if (item !== undefined && item !== null && item !== "") {
+              params.append(key, item);
+            }
+          });
+        } else {
           params.append(key, value);
         }
       });

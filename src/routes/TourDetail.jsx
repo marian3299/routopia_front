@@ -36,9 +36,9 @@ const TourDetail = () => {
           className="tour-traits-section"
           aria-labelledby="tour-traits-title"
         >
-          <h2 id="tour-traits-title" className="tour-traits-heading">
+          <h1 id="tour-traits-title" className="tour-traits-heading">
             Características del destino
-          </h2>
+          </h1>
           <div className="tour-traits-list">
             {(destination.traits ?? []).map((trait) => (
               <div key={trait.id} className="tour-trait">
