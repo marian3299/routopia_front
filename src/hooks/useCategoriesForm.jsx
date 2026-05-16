@@ -3,7 +3,7 @@ import { useNotification } from "../context/useNotificationProvider";
 import { useForm } from "react-hook-form";
 import { createCategory, updateCategory } from "../services/category.service";
 
-const useCategoriesForm = ({ selectedCategory }) => {
+const useCategoriesForm = ({ selectedCategory, onSaved }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [sending, setSending] = useState(false);
@@ -154,6 +154,9 @@ const useCategoriesForm = ({ selectedCategory }) => {
         setValue("name", "");
         setValue("description", "");
         setValue("image", null);
+      }
+      if (onSaved) {
+        await onSaved();
       }
     } catch (error) {
       console.error("Error creating category:", error);

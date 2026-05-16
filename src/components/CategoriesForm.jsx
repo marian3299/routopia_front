@@ -4,7 +4,7 @@ import Button from "./Button";
 import { MoonLoader } from "react-spinners";
 import { FaTrash } from "react-icons/fa";
 
-const CategoriesForm = ({ selectedCategory }) => {
+const CategoriesForm = ({ selectedCategory, onSaved }) => {
   const {
     register,
     imageRegister,
@@ -19,7 +19,7 @@ const CategoriesForm = ({ selectedCategory }) => {
     handleInputChange,
     handleRemoveImage,
     sending,
-  } = useCategoriesForm({ selectedCategory });
+  } = useCategoriesForm({ selectedCategory, onSaved });
   const fileInputRef = useRef(null);
 
   const handleClick = () => {

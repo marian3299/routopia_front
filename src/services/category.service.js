@@ -1,8 +1,12 @@
 import api from "./api";
 import { URLS } from "./urls";
 
-export const getCategories = async () => {
-  const response = await api.get(URLS.GET_CATEGORIES);
+export const getCategories = async ({ page = 0, size = 10, q } = {}) => {
+  const params = new URLSearchParams({ page, size });
+  if (q?.trim()) {
+    params.append("q", q.trim());
+  }
+  const response = await api.get(`${URLS.GET_CATEGORIES}?${params.toString()}`);
   return response.data;
 };
 
