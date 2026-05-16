@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNotification } from "../context/useNotificationProvider";
 import { useForm } from "react-hook-form";
+import { createCategory, updateCategory } from "../services/category.service";
 
 const useCategoriesForm = ({ selectedCategory }) => {
   const [imagePreview, setImagePreview] = useState(null);
@@ -137,13 +138,13 @@ const useCategoriesForm = ({ selectedCategory }) => {
     }
     try {
       if (selectedCategory) {
-        //await updateCategory(selectedCategory.id, dataToSend);
+        await updateCategory(selectedCategory.id, dataToSend);
         notify({
           message: "¡Categoría actualizada correctamente!",
           type: "success",
         });
       } else {
-        //await createCategory(dataToSend);
+        await createCategory(dataToSend);
         notify({
           message: "¡Categoría guardada correctamente!",
           type: "success",

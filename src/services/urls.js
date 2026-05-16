@@ -12,4 +12,11 @@ export const URLS = {
   CREATE_TRAIT: "/traits",
   UPDATE_TRAIT: (id) => `/traits/${id}`,
   DELETE_TRAIT: (id) => `/traits/${id}`,
+
+  //Categories
+  GET_CATEGORIES: "/categories",
+  GET_CATEGORY_BY_ID: (id) => `/categories/${id}`,
+  CREATE_CATEGORY: "/categories",
+  UPDATE_CATEGORY: (id) => `/categories/${id}`,
+  DELETE_CATEGORY: (id) => `/categories/${id}`,
 };
