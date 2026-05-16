@@ -1,5 +1,6 @@
 import React from "react";
 import useTraits from "../hooks/useTraits";
+import useTraitsList from "../hooks/useTraitsList";
 import TraitsList from "../components/TraitsList";
 import TraitsForm from "../components/TraitsForm";
 import Button from "../components/Button";
@@ -7,6 +8,8 @@ import Button from "../components/Button";
 const Traits = () => {
   const { selectedTrait, handleOpenForm, openForm, onDeleteTrait } =
     useTraits();
+  const traitsList = useTraitsList();
+
   return (
     <div className="users-container">
       <div className="users-list-container">
@@ -22,6 +25,7 @@ const Traits = () => {
         <TraitsList
           selectedTrait={selectedTrait}
           handleOpenForm={handleOpenForm}
+          {...traitsList}
         />
       </div>
 
@@ -30,6 +34,7 @@ const Traits = () => {
           <TraitsForm
             selectedTrait={selectedTrait}
             onDeleteTrait={onDeleteTrait}
+            onSaved={traitsList.goToFirstPage}
           />
         ) : null}
       </div>

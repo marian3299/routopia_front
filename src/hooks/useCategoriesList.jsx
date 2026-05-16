@@ -9,13 +9,13 @@ const useCategoriesList = (pageSize = PAGE_SIZE) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
-  const isFirstSearch = useRef(true);
+  const requestIdRef = useRef(0);
 
   const { notify } = useNotification();
 
   const fetchCategories = useCallback(
     async (query, page, size) => {
+      const requestId = ++requestIdRef.current;
       setLoading(true);
       try {
         const res = await getCategories({
@@ -23,15 +23,20 @@ const useCategoriesList = (pageSize = PAGE_SIZE) => {
           size,
           q: query?.q,
         });
+        if (requestId !== requestIdRef.current) return;
+
         setCategories(res.content ?? []);
         setTotalPages(res.totalPages ?? 0);
       } catch (err) {
+        if (requestId !== requestIdRef.current) return;
         console.error("Error fetching categories:", err);
         notify({ message: "Error al cargar categorías", type: "error" });
         setCategories([]);
         setTotalPages(0);
       } finally {
-        setLoading(false);
+        if (requestId === requestIdRef.current) {
+          setLoading(false);
+        }
       }
     },
     [notify],
@@ -44,31 +49,22 @@ const useCategoriesList = (pageSize = PAGE_SIZE) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (isFirstSearch.current) {
-      isFirstSearch.current = false;
-      return;
-    }
+  const updateQueryRef = useRef(pagination.updateQuery);
+  updateQueryRef.current = pagination.updateQuery;
 
-    const timer = setTimeout(() => {
-      const q = searchTerm.trim();
-      pagination.updateQuery(q ? { q } : {});
-    }, 300);
-
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm]);
+  const handleSearch = useCallback((term) => {
+    updateQueryRef.current(term ? { q: term } : {});
+  }, []);
 
   return {
     categories,
-    searchTerm,
-    setSearchTerm,
     loading,
     totalPages,
     currentPage: pagination.currentPage,
     goToPage: pagination.goToPage,
     refresh: pagination.refresh,
     goToFirstPage: pagination.goToFirstPage,
+    handleSearch,
   };
 };
 

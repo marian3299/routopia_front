@@ -1,11 +1,11 @@
 import React from "react";
 import Pagination from "./Pagination";
+import SearchInput from "./SearchInput";
 
 const CategoriesList = ({
   selectedCategory,
   handleOpenForm,
-  searchTerm,
-  setSearchTerm,
+  handleSearch,
   categories,
   loading,
   totalPages,
@@ -14,15 +14,7 @@ const CategoriesList = ({
 }) => {
   return (
     <>
-      <div className="users-search-container">
-        <input
-          type="text"
-          placeholder="Buscar categoría"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="users-search-input"
-        />
-      </div>
+      <SearchInput placeholder="Buscar categoría" onSearch={handleSearch} />
       <div className="users-list">
         {loading ? (
           <div className="loading">Cargando...</div>

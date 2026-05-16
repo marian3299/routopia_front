@@ -4,7 +4,7 @@ import { FaTrash } from "react-icons/fa";
 import Button from "./Button";
 import { MoonLoader } from "react-spinners";
 
-const TraitsForm = ({ selectedTrait, onDeleteTrait }) => {
+const TraitsForm = ({ selectedTrait, onDeleteTrait, onSaved }) => {
   const {
     register,
     imageRegister,
@@ -21,7 +21,7 @@ const TraitsForm = ({ selectedTrait, onDeleteTrait }) => {
     sending,
     handleDeleteTrait,
     deleting,
-  } = useTraitsForm({ selectedTrait, onDeleteTrait });
+  } = useTraitsForm({ selectedTrait, onDeleteTrait, onSaved });
 
   const fileInputRef = useRef(null);
 

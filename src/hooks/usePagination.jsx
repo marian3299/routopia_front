@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 /**
  * Hook personalizado para manejar paginación
@@ -12,56 +12,48 @@ const usePagination = (
   fetchFunction,
   initialPage = 0,
   pageSize = 10,
-  initialQuery = {}
+  initialQuery = {},
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [query, setQuery] = useState(initialQuery);
+  const queryRef = useRef(initialQuery);
   const isInitialized = useRef(false);
 
-  /**
-   * Función para cambiar de página
-   * @param {number} newPage - Nueva página (índice basado en 0)
-   */
+  useEffect(() => {
+    queryRef.current = query;
+  }, [query]);
+
   const goToPage = useCallback(
     async (newPage) => {
       if (newPage === currentPage && isInitialized.current) return;
 
       setCurrentPage(newPage);
-      await fetchFunction(query, newPage, pageSize);
+      await fetchFunction(queryRef.current, newPage, pageSize);
 
       if (!isInitialized.current) {
         isInitialized.current = true;
       }
     },
-    [fetchFunction, query, pageSize, currentPage]
+    [fetchFunction, pageSize, currentPage],
   );
 
-  /**
-   * Función para ir a la página anterior
-   */
   const goToPreviousPage = useCallback(async () => {
     if (currentPage > 0) {
       await goToPage(currentPage - 1);
     }
   }, [currentPage, goToPage]);
 
-  /**
-   * Función para ir a la página siguiente
-   */
   const goToNextPage = useCallback(async () => {
     await goToPage(currentPage + 1);
   }, [currentPage, goToPage]);
 
-  /**
-   * Función para actualizar la query y resetear a la primera página
-   * @param {Object} newQuery - Nueva query de búsqueda
-   */
   const updateQuery = useCallback(
     async (newQuery) => {
-      if (JSON.stringify(newQuery) === JSON.stringify(query)) {
+      if (JSON.stringify(newQuery) === JSON.stringify(queryRef.current)) {
         return;
       }
 
+      queryRef.current = newQuery;
       setQuery(newQuery);
       setCurrentPage(0);
 
@@ -69,43 +61,34 @@ const usePagination = (
         await fetchFunction(newQuery, 0, pageSize);
       } else {
         isInitialized.current = true;
+        await fetchFunction(newQuery, 0, pageSize);
       }
     },
-    [fetchFunction, pageSize, query]
+    [fetchFunction, pageSize],
   );
 
-  /**
-   * Función para resetear la paginación
-   */
   const resetPagination = useCallback(async () => {
     setCurrentPage(0);
+    queryRef.current = initialQuery;
     setQuery(initialQuery);
     isInitialized.current = false;
     await fetchFunction(initialQuery, 0, pageSize);
+    isInitialized.current = true;
   }, [fetchFunction, initialQuery, pageSize]);
 
-  /**
-   * Función para refrescar la página actual manteniendo la query
-   */
   const refresh = useCallback(async () => {
-    await fetchFunction(query, currentPage, pageSize);
-  }, [fetchFunction, query, currentPage, pageSize]);
+    await fetchFunction(queryRef.current, currentPage, pageSize);
+  }, [fetchFunction, currentPage, pageSize]);
 
-  /**
-   * Función para volver a la primera página y recargar con la query actual
-   */
   const goToFirstPage = useCallback(async () => {
     setCurrentPage(0);
-    await fetchFunction(query, 0, pageSize);
-  }, [fetchFunction, query, pageSize]);
+    await fetchFunction(queryRef.current, 0, pageSize);
+  }, [fetchFunction, pageSize]);
 
   return {
-    // Estado
     currentPage,
     pageSize,
     query,
-
-    // Funciones
     goToPage,
     goToPreviousPage,
     goToNextPage,
@@ -113,8 +96,6 @@ const usePagination = (
     resetPagination,
     refresh,
     goToFirstPage,
-
-    // Helpers
     isFirstPage: currentPage === 0,
     hasNextPage: true,
   };

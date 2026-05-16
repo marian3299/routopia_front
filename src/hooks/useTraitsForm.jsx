@@ -7,7 +7,7 @@ import {
 } from "../services/traits.service";
 import { useNotification } from "../context/useNotificationProvider";
 
-const useTraitsForm = ({ selectedTrait, onDeleteTrait }) => {
+const useTraitsForm = ({ selectedTrait, onDeleteTrait, onSaved }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [sending, setSending] = useState(false);
@@ -158,6 +158,9 @@ const useTraitsForm = ({ selectedTrait, onDeleteTrait }) => {
         setValue("name", "");
         setValue("image", null);
       }
+      if (onSaved) {
+        await onSaved();
+      }
     } catch (error) {
       console.error("Error creating trait:", error);
     } finally {
@@ -206,6 +209,9 @@ const useTraitsForm = ({ selectedTrait, onDeleteTrait }) => {
         message: "¡Característica eliminada correctamente!",
         type: "success",
       });
+      if (onSaved) {
+        await onSaved();
+      }
       onDeleteTrait();
     } catch (error) {
       console.error("Error deleting trait:", error);

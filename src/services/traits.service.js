@@ -1,8 +1,12 @@
 import api from "./api";
 import { URLS } from "./urls";
 
-export const getTraits = async () => {
-  const response = await api.get(URLS.GET_TRAITS);
+export const getTraits = async ({ page = 0, size = 10, q } = {}) => {
+  const params = new URLSearchParams({ page, size });
+  if (q?.trim()) {
+    params.append("q", q.trim());
+  }
+  const response = await api.get(`${URLS.GET_TRAITS}?${params.toString()}`);
   return response.data;
 };
 

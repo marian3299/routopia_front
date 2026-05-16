@@ -1,27 +1,30 @@
 import React from "react";
-import useTraitsList from "../hooks/useTraitsList";
+import Pagination from "./Pagination";
+import SearchInput from "./SearchInput";
 
-const TraitsList = ({ selectedTrait, handleOpenForm }) => {
-  const { searchTerm, setSearchTerm, filteredTraits, loading } =
-    useTraitsList();
+const TraitsList = ({
+  selectedTrait,
+  handleOpenForm,
+  handleSearch,
+  traits,
+  loading,
+  totalPages,
+  currentPage,
+  goToPage,
+}) => {
   return (
     <>
-      <div className="users-search-container">
-        <input
-          type="text"
-          placeholder="Buscar característica"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="users-search-input"
-        />
-      </div>
+      <SearchInput
+        placeholder="Buscar característica"
+        onSearch={handleSearch}
+      />
       <div className="users-list">
         {loading ? (
           <div className="loading">Cargando...</div>
-        ) : filteredTraits.length === 0 ? (
+        ) : traits?.length === 0 ? (
           <div className="no-users">No se encontraron características</div>
         ) : (
-          filteredTraits.map((trait) => (
+          traits?.map((trait) => (
             <div
               key={trait.id}
               className={`user-item ${
@@ -36,6 +39,14 @@ const TraitsList = ({ selectedTrait, handleOpenForm }) => {
           ))
         )}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={goToPage}
+        loading={loading}
+        previousLabel="← Anterior"
+        nextLabel="Siguiente →"
+      />
     </>
   );
 };
