@@ -30,7 +30,7 @@ const SearchResults = ({ searchQuery }) => {
     updateQuery,
   } = useRecomendations(buildSearchQuery(searchQuery, []), 10);
 
-  const { categories } = useCategories();
+  const { categories } = useCategories({ paginate: false });
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
