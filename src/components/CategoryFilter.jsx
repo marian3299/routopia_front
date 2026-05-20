@@ -3,9 +3,9 @@ import React from "react";
 /**
  * Filtro por categorías (país / región), multiselección. Solo pensado para resultados de búsqueda.
  *
- * @param {{ id: number, name: string, type: string }[]} categories
- * @param {string[]} selectedTypes — valores enum Category, p. ej. FRANCE
- * @param {(categoryType: string) => void} onToggleType
+ * @param {{ id: number, name: string }[]} categories
+ * @param {number[]} selectedTypes — IDs de categoría
+ * @param {(categoryId: number) => void} onToggleType
  * @param {() => void} onClearFilters
  * @param {boolean} showClearButton
  * @param {number} filteredCount
@@ -33,8 +33,8 @@ const CategoryFilter = ({
           <legend className="category-filter-legend">Categorías</legend>
           <div className="category-filter-chips" role="group">
             {categories.map((cat) => {
-              const checked = selectedTypes.includes(cat.type);
-              const inputId = `category-filter-${cat.type}`;
+              const checked = selectedTypes.includes(cat.id);
+              const inputId = `category-filter-${cat.id}`;
               return (
                 <label
                   key={cat.id}
@@ -45,7 +45,7 @@ const CategoryFilter = ({
                     id={inputId}
                     type="checkbox"
                     checked={checked}
-                    onChange={() => onToggleType(cat.type)}
+                    onChange={() => onToggleType(cat.id)}
                   />
                   <span>{cat.name}</span>
                 </label>

@@ -3,22 +3,33 @@ import useCategories from "../hooks/useCategories";
 import { Link } from "react-router-dom";
 
 const Categories = () => {
-  const { categories } = useCategories();
+  const { categories, loading } = useCategories();
+
   return (
     <div className="categories-container">
       <h1>Destinos populares</h1>
       <p>Explora los mejores lugares para visitar.</p>
       <div className="categories">
-        {categories.map((category) => (
-          <Link to={`/category/${category.type}`} key={category.id}>
-            <div
-              className="category-card"
-              style={{ backgroundImage: `url(${category.image})` }}
-            >
-              <h3>{category.name}</h3>
-            </div>
-          </Link>
-        ))}
+        {loading ? (
+          <p>Cargando categorías...</p>
+        ) : categories.length === 0 ? (
+          <p>No hay categorías disponibles.</p>
+        ) : (
+          categories.map((category) => (
+            <Link to={`/category/${category.id}`} key={category.id}>
+              <div
+                className="category-card"
+                style={{
+                  backgroundImage: category.imageUrl
+                    ? `url(${category.imageUrl})`
+                    : undefined,
+                }}
+              >
+                <h3>{category.name}</h3>
+              </div>
+            </Link>
+          ))
+        )}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import { Controller } from "react-hook-form";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
 import { getTraits } from "../services/traits.service";
+import { getCategories } from "../services/category.service";
 
 const useFormTour = () => {
   const { id } = useParams();
@@ -32,7 +33,7 @@ const useFormTour = () => {
       languages: [],
       traits: [],
       location: "",
-      category: "FRANCE",
+      category: null,
       score: "",
       city: "",
       image: null,
@@ -46,6 +47,8 @@ const useFormTour = () => {
   const [currentImageUrl, setCurrentImageUrl] = useState("");
   const [currentSecondaryImages, setCurrentSecondaryImages] = useState([]);
   const [traits, setTraits] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [pendingCategory, setPendingCategory] = useState(null);
 
   const languages = useMemo(
     () => [
@@ -58,7 +61,7 @@ const useFormTour = () => {
 
   const fetchTraits = useCallback(async () => {
     try {
-      const res = await getTraits();
+      const res = await getTraits({ paginate: false });
       setTraits(
         res.content.map((trait) => ({
           value: trait.id,
@@ -71,9 +74,25 @@ const useFormTour = () => {
     }
   }, [notify]);
 
+  const fetchCategories = useCallback(async () => {
+    try {
+      const res = await getCategories({ paginate: false });
+      setCategories(
+        res.content.map((category) => ({
+          value: category.id,
+          label: category.name,
+        })),
+      );
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+      notify({ message: "Error al cargar categorías", type: "error" });
+    }
+  }, [notify]);
+
   useEffect(() => {
     fetchTraits();
-  }, [fetchTraits]);
+    fetchCategories();
+  }, [fetchTraits, fetchCategories]);
 
   // Cargar datos del destino cuando esté en modo edición
   useEffect(() => {
@@ -92,8 +111,14 @@ const useFormTour = () => {
           setValue("price", destination.precio || "");
           setValue("duration", destination.duration_time || "");
           setValue("description", destination.description || "");
-          setValue("location", destination.location || "");
-          setValue("category", destination.category || "FRANCE");
+          setValue(
+            "location",
+            destination.address || destination.location || "",
+          );
+          setPendingCategory({
+            id: destination.categoryId,
+            name: destination.category,
+          });
           setValue("score", destination.punctuation || "");
           setValue("city", destination.city || "");
 
@@ -133,6 +158,21 @@ const useFormTour = () => {
     }
   }, [id, isEditMode, setValue, notify, languages]);
 
+  useEffect(() => {
+    if (!pendingCategory || categories.length === 0) return;
+
+    const match =
+      (pendingCategory.id != null &&
+        categories.find((c) => c.value === pendingCategory.id)) ||
+      (pendingCategory.name &&
+        categories.find((c) => c.label === pendingCategory.name));
+
+    if (match) {
+      setValue("category", match);
+      setPendingCategory(null);
+    }
+  }, [pendingCategory, categories, setValue]);
+
   const onSubmit = async (data) => {
     setSending(true);
     const dataToSend = new FormData();
@@ -148,7 +188,6 @@ const useFormTour = () => {
       duration: data.duration,
       description: data.description,
       location: data.location,
-      category: data.category,
       score: parseFloat(data.score),
       city: data.city,
     };
@@ -159,6 +198,10 @@ const useFormTour = () => {
         dataToSend.append(key, value);
       }
     });
+
+    if (data.category?.value != null) {
+      dataToSend.append("categoryId", String(data.category.value));
+    }
 
     // Agregar los idiomas seleccionados
     languagesArray.forEach((lang) => dataToSend.append("languages", lang));
@@ -232,6 +275,7 @@ const useFormTour = () => {
     currentImageUrl,
     currentSecondaryImages,
     traits,
+    categories,
   };
 };
 

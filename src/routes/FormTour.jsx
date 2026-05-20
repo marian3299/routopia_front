@@ -20,6 +20,7 @@ const FormTour = () => {
     currentImageUrl,
     currentSecondaryImages,
     traits,
+    categories,
   } = useFormTour();
 
   // Observar el campo de imagen para mostrar vista previa
@@ -174,9 +175,7 @@ const FormTour = () => {
                     closeMenuOnSelect={false}
                     placeholder="Seleccione las características"
                     styles={customSelectStyles}
-                    onChange={(selected) =>
-                      field.onChange(selected ?? [])
-                    }
+                    onChange={(selected) => field.onChange(selected ?? [])}
                     value={traits.filter((option) =>
                       (field.value ?? []).some(
                         (val) => val.value === option.value,
@@ -257,18 +256,27 @@ const FormTour = () => {
               <label htmlFor="category">
                 Categoría <span className="required">*</span>
               </label>
-              <select
-                id="category"
-                {...register("category", {
-                  required: "La categoría es requerida",
-                })}
-              >
-                <option value="FRANCE">Francia</option>
-                <option value="JAPAN">Japon</option>
-                <option value="MEXICO">México</option>
-                <option value="GREECE">Grecia</option>
-                <option value="THAILAND">Tailandia</option>
-              </select>
+              <Controller
+                name="category"
+                control={control}
+                rules={{
+                  validate: (value) =>
+                    value?.value != null || "La categoría es requerida",
+                }}
+                render={({ field }) => (
+                  <Select
+                    inputId="category"
+                    options={categories}
+                    isSearchable
+                    closeMenuOnSelect
+                    placeholder="Seleccione la categoría"
+                    styles={customSelectStyles}
+                    onChange={(selected) => field.onChange(selected ?? null)}
+                    onBlur={field.onBlur}
+                    value={field.value ?? null}
+                  />
+                )}
+              />
               {errors.category && (
                 <span className="error">{errors.category.message}</span>
               )}

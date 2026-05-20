@@ -1,40 +1,28 @@
-import React from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getCategories } from "../services/category.service";
 
 const useCategories = () => {
-  const categories = [
-    {
-      id: 1,
-      name: "Francia",
-      type: "FRANCE",
-      image: "/src/assets/paris.jpg",
-    },
-    {
-      id: 2,
-      name: "Japon",
-      type: "JAPAN",
-      image: "/src/assets/japon.jpg",
-    },
-    {
-      id: 3,
-      name: "México",
-      type: "MEXICO",
-      image: "/src/assets/chiapas.webp",
-    },
-    {
-      id: 4,
-      name: "Grecia",
-      type: "GREECE",
-      image: "/src/assets/grecia.jpg",
-    },
-    {
-      id: 5,
-      name: "Tailandia",
-      type: "THAILAND",
-      image: "/src/assets/tailandia.webp",
-    },
-  ];
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  return { categories };
+  const fetchCategories = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await getCategories({ paginate: false });
+      setCategories(res.content ?? []);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+      setCategories([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  return { categories, loading, refetch: fetchCategories };
 };
 
 export default useCategories;

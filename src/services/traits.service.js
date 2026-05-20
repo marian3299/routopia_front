@@ -1,11 +1,20 @@
 import api from "./api";
 import { URLS } from "./urls";
 
-export const getTraits = async ({ page = 0, size = 10, q } = {}) => {
-  const params = new URLSearchParams({ page, size });
+export const getTraits = async ({ page = 0, size = 10, q, paginate = true } = {}) => {
+  const params = new URLSearchParams();
+
+  if (paginate === false) {
+    params.append("paginate", "false");
+  } else {
+    params.append("page", page);
+    params.append("size", size);
+  }
+
   if (q?.trim()) {
     params.append("q", q.trim());
   }
+
   const response = await api.get(`${URLS.GET_TRAITS}?${params.toString()}`);
   return response.data;
 };
