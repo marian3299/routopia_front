@@ -47,6 +47,11 @@ const UserAvatar = () => {
     setIsOpen(false);
   };
 
+  const handleViewFavorites = () => {
+    navigate("/favorites");
+    setIsOpen(false);
+  };
+
   return (
     <div className="user-avatar-container" ref={dropdownRef}>
       <div className="user-avatar" onClick={() => setIsOpen(!isOpen)}>
@@ -57,6 +62,11 @@ const UserAvatar = () => {
           <button className="dropdown-item" onClick={handleViewProfile}>
             Ver perfil
           </button>
+          {user.role !== "ADMIN" && (
+            <button className="dropdown-item" onClick={handleViewFavorites}>
+              Mis favoritos
+            </button>
+          )}
           <button className="dropdown-item" onClick={handleLogout}>
             Cerrar sesión
           </button>

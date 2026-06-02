@@ -26,5 +26,6 @@ export const URLS = {
 
   //Favorites
   GET_FAVORITES: "/favorites",
+  GET_FAVORITE_DESTINATIONS: "/favorites/destinos",
   TOGGLE_FAVORITE: (destinoId) => `/favorites/${destinoId}/toggle`,
 };

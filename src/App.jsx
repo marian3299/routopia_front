@@ -10,20 +10,23 @@ import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Profile from "./routes/Profile";
 import { AuthProvider } from "./context/AuthContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
 import Admin from "./routes/Admin";
 import Users from "./routes/Users";
 import Traits from "./routes/Traits";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { PERMISSIONS } from "./constants/permissions";
 import Characteristics from "./routes/Categories";
+import Favorites from "./routes/Favorites";
 
 function App() {
   return (
     <div className="App">
       <AuthProvider>
-        <Navbar />
-        <div className="content">
-          <Routes>
+        <FavoritesProvider>
+          <Navbar />
+          <div className="content">
+            <Routes>
             {/* Rutas públicas - no requieren autenticación */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -58,6 +61,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <ProtectedRoute>
+                  <Favorites />
                 </ProtectedRoute>
               }
             />
@@ -118,6 +129,7 @@ function App() {
           </Routes>
         </div>
         <Footer />
+        </FavoritesProvider>
       </AuthProvider>
     </div>
   );
