@@ -22,10 +22,12 @@ const Navbar = () => {
       <div className={NavbarStyles.buttonContainer}>
         {user && (
           <>
-            <Button
-              text="Mis favoritos"
-              onClick={() => navigate("/favorites")}
-            />
+            {user.role !== "ADMIN" && (
+              <Button
+                text="Mis favoritos"
+                onClick={() => navigate("/favorites")}
+              />
+            )}
             {hasPermission(PERMISSIONS.DESTINOS.CREATE) && (
               <Button
                 text="Agregar destino"
