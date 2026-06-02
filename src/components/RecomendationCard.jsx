@@ -1,15 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaHeart, FaRegHeart } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 
-const RecomendationCard = ({ image, location, score, price, name, id }) => {
+const RecomendationCard = ({
+  image,
+  location,
+  score,
+  price,
+  name,
+  id,
+  isAuthenticated,
+  isFavorite,
+  onToggleFavorite,
+  isToggling,
+}) => {
   return (
-    <Link to={"/tour/" + id} className="r-card-container">
+    <article className="r-card-container">
       <div className="r-card-image">
-        <img src={image} alt={location} width={200} height={200} />
+        <Link to={"/tour/" + id} className="r-card-image-link">
+          <img src={image} alt={name} width={200} height={200} />
+        </Link>
+        {isAuthenticated && (
+          <button
+            type="button"
+            className={`favorite-btn ${isFavorite ? "is-favorite" : ""}`}
+            onClick={(event) => onToggleFavorite(id, event)}
+            disabled={isToggling}
+            aria-label={
+              isFavorite ? "Quitar de favoritos" : "Marcar como favorito"
+            }
+            aria-pressed={isFavorite}
+          >
+            {isFavorite ? <FaHeart /> : <FaRegHeart />}
+          </button>
+        )}
       </div>
-      <div className="r-card-info">
+      <Link to={"/tour/" + id} className="r-card-info">
         <div className="header">
           <h2>{name}</h2>
           <p className="score icon-text">
@@ -24,8 +51,8 @@ const RecomendationCard = ({ image, location, score, price, name, id }) => {
         <p className="price">
           <span>a partir de </span>${price}
         </p>
-      </div>
-    </Link>
+      </Link>
+    </article>
   );
 };
 

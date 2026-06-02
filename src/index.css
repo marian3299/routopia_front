@@ -528,13 +528,21 @@ main {
   height: 250px;
   box-sizing: border-box;
   cursor: pointer;
+  position: relative;
 }
 
 .r-card-image {
+  position: relative;
   width: 100%;
   height: 70%;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
+}
+
+.r-card-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .r-card-image img {
@@ -543,12 +551,76 @@ main {
   object-fit: cover;
 }
 
+.favorite-btn {
+  all: unset;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 1.5rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.favorite-btn:hover:not(:disabled),
+.favorite-btn:focus:not(:disabled),
+.favorite-btn:focus-visible:not(:disabled),
+.favorite-btn:active:not(:disabled) {
+  background: none;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  transform: scale(1.15);
+}
+
+.favorite-btn:hover:not(:disabled):not(.is-favorite),
+.favorite-btn:focus:not(:disabled):not(.is-favorite),
+.favorite-btn:focus-visible:not(:disabled):not(.is-favorite),
+.favorite-btn:active:not(:disabled):not(.is-favorite) {
+  color: #fff;
+}
+
+.favorite-btn.is-favorite {
+  color: #dc2626;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.favorite-btn.is-favorite:hover:not(:disabled),
+.favorite-btn.is-favorite:focus:not(:disabled),
+.favorite-btn.is-favorite:focus-visible:not(:disabled),
+.favorite-btn.is-favorite:active:not(:disabled) {
+  color: #dc2626;
+  background: none;
+  background-color: transparent;
+}
+
+.favorite-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
 .r-card-info {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 16px;
   gap: 6px;
+  text-decoration: none;
+  color: inherit;
+  box-sizing: border-box;
 }
 
 .r-card-info > .header {

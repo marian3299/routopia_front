@@ -23,4 +23,8 @@ export const URLS = {
   //Bookings
   CREATE_BOOKING: "/bookings",
   BOOKING_AVAILABILITY: "/bookings/availability",
+
+  //Favorites
+  GET_FAVORITES: "/favorites",
+  TOGGLE_FAVORITE: (destinoId) => `/favorites/${destinoId}/toggle`,
 };

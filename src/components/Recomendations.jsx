@@ -1,5 +1,6 @@
 import React from "react";
 import useRecomendations from "../hooks/useRecomendations";
+import useFavorites from "../hooks/useFavorites";
 import RecomendationCard from "./RecomendationCard";
 import Pagination from "./Pagination";
 
@@ -11,6 +12,13 @@ const Recomendations = () => {
     currentPage,
     goToPage,
   } = useRecomendations({}, 10);
+
+  const {
+    isAuthenticated,
+    isFavorite,
+    handleToggleFavorite,
+    togglingId,
+  } = useFavorites();
 
   return (
     <div className="recomendations-container">
@@ -28,6 +36,10 @@ const Recomendations = () => {
               score={destination.punctuation}
               price={destination.precio}
               image={destination.imageUrl}
+              isAuthenticated={isAuthenticated}
+              isFavorite={isFavorite(destination.id)}
+              onToggleFavorite={handleToggleFavorite}
+              isToggling={togglingId === destination.id}
             />
           ))
         )}
