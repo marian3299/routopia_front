@@ -3,6 +3,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ImageCarousel from "../components/ImageCarousel";
 import TourDescription from "../components/TourDescription";
+import TourPolicies from "../components/TourPolicies";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import useTourDetail from "../hooks/useTourDetail";
 
@@ -64,6 +65,8 @@ const TourDetail = () => {
         <h1>Descripción general</h1>
         <p>{destination?.description}</p>
       </div>
+
+      <TourPolicies policies={destination?.policies} />
 
       <div id="image-gallery" className="image-gallery">
         <h1>Galería de imágenes</h1>

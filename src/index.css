@@ -855,6 +855,149 @@ button:hover .btnArrow {
   line-height: 1.35;
 }
 
+.tour-policies-section {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tour-policies-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  text-underline-offset: 6px;
+}
+
+.tour-policies-underline {
+  display: none;
+}
+
+.tour-policies-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 1.25rem 1.5rem;
+  margin-top: 1rem;
+}
+
+.tour-policy-card {
+  min-width: 0;
+}
+
+.tour-policy-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.tour-policy-description {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #374151;
+}
+
+.policies-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.policies-form-list {
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-right: 0.25rem;
+}
+
+.policies-form-hint {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.policy-add-btn-wrapper {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+
+.policy-add-btn-wrapper--disabled {
+  cursor: not-allowed;
+}
+
+.policy-add-tooltip {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 20;
+  max-width: 260px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #1f2937;
+  color: #fff;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 400;
+  white-space: normal;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.policy-add-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 16px;
+  border: 6px solid transparent;
+  border-top-color: #1f2937;
+}
+
+.policy-add-btn-wrapper--disabled:hover .policy-add-tooltip,
+.policy-add-btn-wrapper--disabled:focus-within .policy-add-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.policy-form-item {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.policy-add-btn,
+.policy-remove-btn {
+  all: unset;
+  cursor: pointer;
+  font-weight: 500;
+  color: #eb4d4b;
+  width: fit-content;
+}
+
+.policy-add-btn:hover:not(:disabled),
+.policy-remove-btn:hover {
+  text-decoration: underline;
+}
+
+.policy-add-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
 .tour-description-card {
   display: flex;
   flex-direction: column;

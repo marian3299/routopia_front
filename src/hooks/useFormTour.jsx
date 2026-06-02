@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import {
   createDestination,
   updateDestination,
@@ -38,7 +38,21 @@ const useFormTour = () => {
       city: "",
       image: null,
       image_list: null,
+      policies: [
+        { title: "", description: "" },
+        { title: "", description: "" },
+        { title: "", description: "" },
+      ],
     },
+  });
+
+  const {
+    fields: policyFields,
+    append: appendPolicy,
+    remove: removePolicy,
+  } = useFieldArray({
+    control,
+    name: "policies",
   });
 
   const { notify } = useNotification();
@@ -143,6 +157,22 @@ const useFormTour = () => {
               })),
             );
           }
+
+          if (destination.policies?.length) {
+            setValue(
+              "policies",
+              destination.policies.map((p) => ({
+                title: p.title || "",
+                description: p.description || "",
+              })),
+            );
+          } else {
+            setValue("policies", [
+              { title: "", description: "" },
+              { title: "", description: "" },
+              { title: "", description: "" },
+            ]);
+          }
         } catch (error) {
           console.error("Error loading destination:", error);
           notify({
@@ -174,6 +204,18 @@ const useFormTour = () => {
   }, [pendingCategory, categories, setValue]);
 
   const onSubmit = async (data) => {
+    const validPolicies = (data.policies || []).filter(
+      (policy) => policy.title?.trim() && policy.description?.trim(),
+    );
+
+    if (validPolicies.length < 3) {
+      notify({
+        message: "Debes agregar al menos 3 políticas de uso con título y descripción.",
+        type: "error",
+      });
+      return;
+    }
+
     setSending(true);
     const dataToSend = new FormData();
 
@@ -214,6 +256,12 @@ const useFormTour = () => {
         dataToSend.append("traits", String(id));
       }
     });
+
+    const policiesPayload = validPolicies.map((policy) => ({
+      title: policy.title.trim(),
+      description: policy.description.trim(),
+    }));
+    dataToSend.append("policies", JSON.stringify(policiesPayload));
 
     // Agregar la imagen si existe
     if (data.image && data.image[0]) {
@@ -276,6 +324,9 @@ const useFormTour = () => {
     currentSecondaryImages,
     traits,
     categories,
+    policyFields,
+    appendPolicy,
+    removePolicy,
   };
 };
 

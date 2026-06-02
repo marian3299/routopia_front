@@ -21,10 +21,21 @@ const FormTour = () => {
     currentSecondaryImages,
     traits,
     categories,
+    policyFields,
+    appendPolicy,
+    removePolicy,
   } = useFormTour();
 
   // Observar el campo de imagen para mostrar vista previa
   const imageFile = watch("image");
+  const watchedPolicies = watch("policies") || [];
+  const allPoliciesComplete = watchedPolicies.every(
+    (policy) => policy?.title?.trim() && policy?.description?.trim(),
+  );
+  const canAddPolicy = allPoliciesComplete;
+  const addPolicyTooltip = canAddPolicy
+    ? ""
+    : "Complete el título y la descripción de todas las políticas para agregar otra";
 
   const customSelectStyles = {
     control: (provided, state) => ({
@@ -188,6 +199,87 @@ const FormTour = () => {
                 <span className="error">{errors.traits.message}</span>
               )}
             </div>
+          </div>
+
+          <h2>Políticas de uso</h2>
+          <div className="form-section policies-form-section">
+            <p className="policies-form-hint">
+              Indica cuidados, precauciones y recomendaciones para quien reserve
+              este destino. Mínimo 3 políticas.
+            </p>
+            <div className="policies-form-list">
+            {policyFields.map((field, index) => (
+              <div key={field.id} className="policy-form-item">
+                <div className="form-group">
+                  <label htmlFor={`policy-title-${index}`}>
+                    Título de la política <span className="required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id={`policy-title-${index}`}
+                    placeholder="Ej: Qué llevar"
+                    {...register(`policies.${index}.title`, {
+                      required: "El título es requerido",
+                    })}
+                  />
+                  {errors.policies?.[index]?.title && (
+                    <span className="error">
+                      {errors.policies[index].title.message}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor={`policy-desc-${index}`}>
+                    Descripción <span className="required">*</span>
+                  </label>
+                  <textarea
+                    id={`policy-desc-${index}`}
+                    rows={3}
+                    placeholder="Detalle de la política"
+                    {...register(`policies.${index}.description`, {
+                      required: "La descripción es requerida",
+                    })}
+                  />
+                  {errors.policies?.[index]?.description && (
+                    <span className="error">
+                      {errors.policies[index].description.message}
+                    </span>
+                  )}
+                </div>
+                {policyFields.length > 3 && (
+                  <button
+                    type="button"
+                    className="policy-remove-btn"
+                    onClick={() => removePolicy(index)}
+                  >
+                    Eliminar política
+                  </button>
+                )}
+              </div>
+            ))}
+            </div>
+            <span
+              className={`policy-add-btn-wrapper ${!canAddPolicy ? "policy-add-btn-wrapper--disabled" : ""}`}
+            >
+              <button
+                type="button"
+                className="policy-add-btn"
+                onClick={() => appendPolicy({ title: "", description: "" })}
+                disabled={!canAddPolicy}
+                aria-describedby={!canAddPolicy ? "policy-add-tooltip" : undefined}
+              >
+                + Agregar otra política
+              </button>
+              {!canAddPolicy && (
+                <span
+                  id="policy-add-tooltip"
+                  className="policy-add-tooltip"
+                  role="tooltip"
+                >
+                  {addPolicyTooltip}
+                </span>
+              )}
+            </span>
           </div>
 
           {/* Ubicación e idioma */}
