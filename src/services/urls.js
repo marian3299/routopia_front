@@ -19,4 +19,8 @@ export const URLS = {
   CREATE_CATEGORY: "/categories",
   UPDATE_CATEGORY: (id) => `/categories/${id}`,
   DELETE_CATEGORY: (id) => `/categories/${id}`,
+
+  //Bookings
+  CREATE_BOOKING: "/bookings",
+  BOOKING_AVAILABILITY: "/bookings/availability",
 };

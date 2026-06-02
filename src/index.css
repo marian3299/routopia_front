@@ -800,6 +800,64 @@ button:hover .btnArrow {
   gap: 8px;
 }
 
+.tour-reservation .react-datepicker-wrapper {
+  width: 100%;
+}
+
+.tour-reservation .react-datepicker__input-container input {
+  width: 100%;
+}
+
+.tour-datepicker-popper {
+  z-index: 100;
+}
+
+.tour-datepicker-calendar {
+  display: flex;
+  border: none;
+  font-family: inherit;
+}
+
+.tour-datepicker-calendar .react-datepicker__header {
+  background-color: #f7f5f2;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tour-datepicker-calendar .react-datepicker__day--selected,
+.tour-datepicker-calendar .react-datepicker__day--keyboard-selected {
+  background-color: #d97706;
+  color: #fff;
+}
+
+.tour-datepicker-calendar .react-datepicker__day--disabled,
+.tour-datepicker-calendar .react-datepicker__day--disabled:hover {
+  color: #991b1b;
+  background-color: #fee2e2;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.tour-reservation .availability-error {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fef2f2;
+  color: #991b1b;
+  font-size: 0.875rem;
+}
+
+.tour-reservation .availability-error button {
+  align-self: flex-start;
+  padding: 6px 12px;
+  border: 1px solid #991b1b;
+  border-radius: 6px;
+  background: transparent;
+  color: #991b1b;
+  cursor: pointer;
+}
+
 .tour-description-card ul {
   padding-left: 38px;
 }
