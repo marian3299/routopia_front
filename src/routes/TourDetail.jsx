@@ -1,14 +1,30 @@
 import React from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ImageCarousel from "../components/ImageCarousel";
 import TourDescription from "../components/TourDescription";
 import TourPolicies from "../components/TourPolicies";
+import ShareProductModal from "../components/ShareProductModal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import useTourDetail from "../hooks/useTourDetail";
+import useShareProduct from "../hooks/useShareProduct";
 
 const TourDetail = () => {
   const { destination, fetching_destination, carouserImages } = useTourDetail();
+  const {
+    isOpen,
+    openShareModal,
+    closeShareModal,
+    selectedNetwork,
+    setSelectedNetwork,
+    customMessage,
+    setCustomMessage,
+    productUrl,
+    briefDescription,
+    shareToNetwork,
+    imageUrl,
+    productName,
+  } = useShareProduct(destination);
 
   if (fetching_destination) {
     return <div>Cargando...</div>;
@@ -19,12 +35,35 @@ const TourDetail = () => {
       <div className="tour-detail-header">
         <h1>{destination?.name}</h1>
 
-        <Link to="/">
-          <button className="back-button">
-            <FaArrowLeft className="btnArrow" /> Volver
+        <div className="tour-detail-header-actions">
+          <button
+            type="button"
+            className="share-button"
+            onClick={openShareModal}
+          >
+            <FaShareAlt className="btnArrow" /> Compartir
           </button>
-        </Link>
+          <Link to="/">
+            <button type="button" className="back-button">
+              <FaArrowLeft className="btnArrow" /> Volver
+            </button>
+          </Link>
+        </div>
       </div>
+
+      <ShareProductModal
+        isOpen={isOpen}
+        onClose={closeShareModal}
+        productName={productName}
+        imageUrl={imageUrl}
+        briefDescription={briefDescription}
+        productUrl={productUrl}
+        selectedNetwork={selectedNetwork}
+        onSelectNetwork={setSelectedNetwork}
+        customMessage={customMessage}
+        onMessageChange={setCustomMessage}
+        onShare={shareToNetwork}
+      />
       <div className="tour-detail-content">
         <ImageCarousel images={carouserImages} mainImage={destination?.image} />
         <TourDescription destination={destination} />

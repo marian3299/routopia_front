@@ -684,8 +684,296 @@ p.icon-text {
 .tour-detail-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
   width: 100%;
   max-width: 1250px;
+}
+
+.tour-detail-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.share-button,
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.share-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+.share-modal {
+  width: min(100%, 560px);
+  max-height: min(90vh, 720px);
+  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  padding: 1.25rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.share-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.share-modal-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.share-modal-close {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.share-modal-close:hover {
+  color: #eb4d4b;
+  background: transparent;
+}
+
+.share-modal-preview {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.share-modal-preview img,
+.share-modal-image-fallback {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  background-color: #e5e7eb;
+}
+
+.share-modal-preview-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.share-modal-preview-info h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.share-modal-preview-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #4b5563;
+}
+
+.share-modal-link-row {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.share-modal-link-row input {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8rem;
+  padding: 6px 10px;
+}
+
+.share-copy-btn {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  border: 2px solid #d1d1d1;
+  border-radius: 8px;
+  color: #eb4d4b;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.share-copy-btn:hover {
+  background: transparent;
+  color: #eb4d4b;
+}
+
+.share-copy-btn.is-copied {
+  border-color: #16a34a;
+  background-color: #dcfce7;
+  color: #16a34a;
+  animation: share-copy-pop 0.35s ease;
+}
+
+.share-copied-toast {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  padding: 4px 10px;
+  border-radius: 6px;
+  background-color: #16a34a;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: share-copied-fade 1.8s ease forwards;
+}
+
+@keyframes share-copy-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes share-copied-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+}
+
+.share-modal-label {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.share-network-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.share-network-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  padding: 0.75rem 0.9rem;
+  border: 2px solid #d1d1d1;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.share-network-btn:hover {
+  background-color: #f7f5f2;
+  color: #1a1a1a;
+}
+
+.share-network-btn.active {
+  border-color: #eb4d4b;
+  background-color: #fef2f2;
+  color: #eb4d4b;
+}
+
+.share-modal-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.share-modal-message label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.share-modal-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.share-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.share-cancel-btn {
+  background-color: #f5f5f5;
+}
+
+.share-confirm-btn {
+  min-width: 120px;
+}
+
+@media (max-width: 560px) {
+  .share-modal-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .share-modal-preview img,
+  .share-modal-image-fallback {
+    width: 100%;
+    height: 180px;
+  }
+
+  .share-network-list {
+    grid-template-columns: 1fr;
+  }
+
+  .tour-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tour-detail-header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
 .btnArrow {
@@ -694,12 +982,6 @@ p.icon-text {
 
 button:hover .btnArrow {
   color: white;
-}
-
-.back-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .carousel-container {
