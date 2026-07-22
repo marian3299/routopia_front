@@ -653,6 +653,221 @@ p.icon-text {
   font-weight: bold;
 }
 
+.score-count {
+  margin-left: 4px;
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 0.85em;
+}
+
+.tour-detail-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.tour-detail-title-block h1 {
+  margin: 0;
+}
+
+.tour-detail-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.tour-detail-rating .icon {
+  color: #f59e0b;
+}
+
+.tour-detail-rating-count {
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.tour-reviews-section {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0.5rem 0 1rem;
+}
+
+.tour-reviews-heading {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.tour-reviews-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tour-reviews-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tour-reviews-average {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tour-reviews-count {
+  margin: 0.15rem 0 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.star-rating--md .star-icon,
+.star-rating--md .star-btn {
+  font-size: 1rem;
+}
+
+.star-rating--lg .star-icon,
+.star-rating--lg .star-btn {
+  font-size: 1.35rem;
+}
+
+.star-icon {
+  color: #d1d5db;
+}
+
+.star-icon.is-active {
+  color: #f59e0b;
+}
+
+.star-btn {
+  all: unset;
+  cursor: pointer;
+  color: #d1d5db;
+  display: inline-flex;
+  line-height: 1;
+}
+
+.star-btn.is-active,
+.star-btn:hover {
+  color: #f59e0b;
+  background: transparent;
+}
+
+.star-rating--interactive .star-btn:hover {
+  transform: scale(1.08);
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.review-form h3 {
+  margin: 0;
+}
+
+.review-form-hint {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.review-form-stars {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.review-form .optional {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.review-submit-btn {
+  align-self: flex-start;
+  min-width: 160px;
+}
+
+.review-status-msg {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.reviews-empty {
+  margin: 0;
+  color: #6b7280;
+}
+
+.review-card {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.review-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.review-user {
+  margin: 0;
+  font-weight: 600;
+}
+
+.review-date {
+  margin: 0.15rem 0 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.review-comment {
+  margin: 0.75rem 0 0;
+  line-height: 1.5;
+  color: #374151;
+}
+
+@media (max-width: 640px) {
+  .tour-reviews-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .location {
   font-size: 0.8rem;
   color: #4a4a4a;

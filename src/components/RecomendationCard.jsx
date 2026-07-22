@@ -7,6 +7,7 @@ const RecomendationCard = ({
   image,
   location,
   score,
+  reviewCount = 0,
   price,
   name,
   id,
@@ -39,8 +40,10 @@ const RecomendationCard = ({
       <Link to={"/tour/" + id} className="r-card-info">
         <div className="header">
           <h2>{name}</h2>
-          <p className="score icon-text">
-            <FaStar className="icon" /> {score}
+          <p className="score icon-text" title={`${reviewCount} valoraciones`}>
+            <FaStar className="icon" />{" "}
+            {score != null ? Number(score).toFixed(1) : "—"}
+            <span className="score-count">({reviewCount})</span>
           </p>
         </div>
 

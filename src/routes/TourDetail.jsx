@@ -1,9 +1,10 @@
-import React from "react";
-import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
+import React, { useCallback, useState } from "react";
+import { FaArrowLeft, FaShareAlt, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ImageCarousel from "../components/ImageCarousel";
 import TourDescription from "../components/TourDescription";
 import TourPolicies from "../components/TourPolicies";
+import TourReviews from "../components/TourReviews";
 import ShareProductModal from "../components/ShareProductModal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import useTourDetail from "../hooks/useTourDetail";
@@ -11,6 +12,10 @@ import useShareProduct from "../hooks/useShareProduct";
 
 const TourDetail = () => {
   const { destination, fetching_destination, carouserImages } = useTourDetail();
+  const [ratingSummary, setRatingSummary] = useState({
+    averageRating: null,
+    totalReviews: null,
+  });
   const {
     isOpen,
     openShareModal,
@@ -26,14 +31,33 @@ const TourDetail = () => {
     productName,
   } = useShareProduct(destination);
 
+  const handleAverageChange = useCallback(({ averageRating, totalReviews }) => {
+    setRatingSummary({ averageRating, totalReviews });
+  }, []);
+
   if (fetching_destination) {
     return <div>Cargando...</div>;
   }
 
+  const displayAverage =
+    ratingSummary.averageRating ?? destination?.punctuation ?? 0;
+  const displayCount =
+    ratingSummary.totalReviews ?? destination?.reviewCount ?? 0;
+
   return (
     <div className="tour-detail-container">
       <div className="tour-detail-header">
-        <h1>{destination?.name}</h1>
+        <div className="tour-detail-title-block">
+          <h1>{destination?.name}</h1>
+          <p className="tour-detail-rating">
+            <FaStar className="icon" />
+            <span>{Number(displayAverage).toFixed(1)}</span>
+            <span className="tour-detail-rating-count">
+              ({displayCount}{" "}
+              {displayCount === 1 ? "valoración" : "valoraciones"})
+            </span>
+          </p>
+        </div>
 
         <div className="tour-detail-header-actions">
           <button
@@ -104,6 +128,11 @@ const TourDetail = () => {
         <h1>Descripción general</h1>
         <p>{destination?.description}</p>
       </div>
+
+      <TourReviews
+        destinoId={destination?.id}
+        onAverageChange={handleAverageChange}
+      />
 
       <TourPolicies policies={destination?.policies} />
 

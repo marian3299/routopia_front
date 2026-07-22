@@ -28,4 +28,8 @@ export const URLS = {
   GET_FAVORITES: "/favorites",
   GET_FAVORITE_DESTINATIONS: "/favorites/destinos",
   TOGGLE_FAVORITE: (destinoId) => `/favorites/${destinoId}/toggle`,
+
+  //Reviews
+  GET_REVIEWS_BY_DESTINO: (destinoId) => `/reviews/destino/${destinoId}`,
+  CREATE_REVIEW: "/reviews",
 };

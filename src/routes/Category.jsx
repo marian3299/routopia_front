@@ -23,6 +23,7 @@ const Category = () => {
                 name={destination.name}
                 location={destination.location}
                 score={destination.punctuation}
+                reviewCount={destination.reviewCount ?? 0}
                 price={destination.precio}
                 image={destination.imageUrl}
               />
