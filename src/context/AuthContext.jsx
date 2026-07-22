@@ -36,9 +36,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const res = await api.post("/auth/login", { email, password });
-    const { token, role, nombre, apellido, permissions } = res.data;
+    const { id, token, role, nombre, apellido, permissions } = res.data;
     Cookies.set("token", token, { expires: 7 });
     const userData = {
+      id,
       email,
       role,
       nombre,
@@ -56,9 +57,10 @@ export const AuthProvider = ({ children }) => {
       email,
       password,
     });
-    const { token, role, permissions } = res.data;
+    const { id, token, role, permissions } = res.data;
     Cookies.set("token", token, { expires: 7 });
     const userData = {
+      id,
       email,
       role,
       nombre,

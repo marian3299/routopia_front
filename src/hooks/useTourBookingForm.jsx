@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNotification } from "../context/useNotificationProvider";
+import { useAuth } from "../context/AuthContext";
 import {
   createBooking,
   getBookingAvailability,
@@ -25,6 +26,7 @@ const isSameDay = (a, b) =>
 
 const useTourBookingForm = ({ destination }) => {
   const { notify } = useNotification();
+  const { user } = useAuth();
   const [blockedDates, setBlockedDates] = useState([]);
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [availabilityError, setAvailabilityError] = useState(false);
@@ -88,7 +90,7 @@ const useTourBookingForm = ({ destination }) => {
       destinoId: destination.id,
       bookingDate: formatDateParam(data.bookingDate),
       personCount: data.personCount,
-      userId: 1, // TODO: Cambiar por el id del usuario logueado
+      userId: user?.id,
     };
 
     try {
