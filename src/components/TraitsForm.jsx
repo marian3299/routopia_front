@@ -103,19 +103,38 @@ const TraitsForm = ({ selectedTrait, onDeleteTrait, onSaved }) => {
           </div>
           <div className="form-button-container">
             {selectedTrait && (
-              <Button
-                className="form-button secondary"
-                text={
-                  deleting ? (
-                    <MoonLoader color="#1a1a1a" size={16} />
-                  ) : (
-                    "Eliminar característica"
-                  )
-                }
-                onClick={handleDeleteTrait}
-                type="button"
-                disabled={deleting || sending}
-              />
+              <span
+                className={`btn-tooltip-wrapper ${
+                  !selectedTrait.deletable ? "btn-tooltip-wrapper--disabled" : ""
+                }`}
+              >
+                <Button
+                  className="form-button secondary"
+                  text={
+                    deleting ? (
+                      <MoonLoader color="#1a1a1a" size={16} />
+                    ) : (
+                      "Eliminar característica"
+                    )
+                  }
+                  onClick={handleDeleteTrait}
+                  type="button"
+                  disabled={deleting || sending || !selectedTrait.deletable}
+                  aria-describedby={
+                    !selectedTrait.deletable ? "trait-delete-tooltip" : undefined
+                  }
+                />
+                {!selectedTrait.deletable && (
+                  <span
+                    id="trait-delete-tooltip"
+                    className="btn-tooltip"
+                    role="tooltip"
+                  >
+                    No se puede eliminar: está asignada a uno o más destinos.
+                    Quitala de esos destinos primero.
+                  </span>
+                )}
+              </span>
             )}
             <Button
               className="form-button"

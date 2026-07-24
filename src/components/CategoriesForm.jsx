@@ -120,34 +120,24 @@ const CategoriesForm = ({ selectedCategory, onSaved, onDeleted }) => {
             )}
           </div>
           <div className="form-button-container">
-            <Button
-              className="form-button"
-              text={
-                sending ? (
-                  <MoonLoader color="#fff" size={16} />
-                ) : selectedCategory ? (
-                  "Actualizar categoría"
-                ) : (
-                  "Guardar categoría"
-                )
-              }
-              type="submit"
-              disabled={sending}
-            />
             {selectedCategory && (
               <span
                 className={`btn-tooltip-wrapper ${
-                  !selectedCategory.deletable ? "btn-tooltip-wrapper--disabled" : ""
+                  !selectedCategory.deletable
+                    ? "btn-tooltip-wrapper--disabled"
+                    : ""
                 }`}
               >
                 <Button
-                  className="form-button"
+                  className="form-button secondary"
                   text="Eliminar categoría"
                   type="button"
                   onClick={() => setShowDeleteModal(true)}
                   disabled={sending || deleting || !selectedCategory.deletable}
                   aria-describedby={
-                    !selectedCategory.deletable ? "category-delete-tooltip" : undefined
+                    !selectedCategory.deletable
+                      ? "category-delete-tooltip"
+                      : undefined
                   }
                 />
                 {!selectedCategory.deletable && (
@@ -162,6 +152,20 @@ const CategoriesForm = ({ selectedCategory, onSaved, onDeleted }) => {
                 )}
               </span>
             )}
+            <Button
+              className="form-button"
+              text={
+                sending ? (
+                  <MoonLoader color="#fff" size={16} />
+                ) : selectedCategory ? (
+                  "Actualizar categoría"
+                ) : (
+                  "Guardar categoría"
+                )
+              }
+              type="submit"
+              disabled={sending}
+            />
           </div>
         </form>
       </div>

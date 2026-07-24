@@ -149,7 +149,7 @@ button:hover {
   color: #1a1a1a;
 }
 
-.form-button.secondary:hover {
+.form-button.secondary:not(:disabled):hover {
   background-color: #f1d6bd;
   border: 2px solid #f1d6bd;
   color: white;

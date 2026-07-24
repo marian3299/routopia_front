@@ -216,7 +216,9 @@ const useTraitsForm = ({ selectedTrait, onDeleteTrait, onSaved }) => {
     } catch (error) {
       console.error("Error deleting trait:", error);
       notify({
-        message: "Hubo un error al eliminar la característica",
+        message:
+          error.response?.data?.message ||
+          "Hubo un error al eliminar la característica",
         type: "error",
       });
     } finally {
