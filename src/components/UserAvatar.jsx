@@ -38,7 +38,7 @@ const UserAvatar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
     setIsOpen(false);
   };
 
