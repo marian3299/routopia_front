@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
 import useCategoriesForm from "../hooks/useCategoriesForm";
 import Button from "./Button";
+import ModalConfirm from "./ModalConfirm";
 import { MoonLoader } from "react-spinners";
 import { FaTrash } from "react-icons/fa";
 
-const CategoriesForm = ({ selectedCategory, onSaved }) => {
+const CategoriesForm = ({ selectedCategory, onSaved, onDeleted }) => {
   const {
     register,
     imageRegister,
@@ -19,7 +20,11 @@ const CategoriesForm = ({ selectedCategory, onSaved }) => {
     handleInputChange,
     handleRemoveImage,
     sending,
-  } = useCategoriesForm({ selectedCategory, onSaved });
+    showDeleteModal,
+    setShowDeleteModal,
+    handleDeleteCategory,
+    deleting,
+  } = useCategoriesForm({ selectedCategory, onSaved, onDeleted });
   const fileInputRef = useRef(null);
 
   const handleClick = () => {
@@ -129,9 +134,45 @@ const CategoriesForm = ({ selectedCategory, onSaved }) => {
               type="submit"
               disabled={sending}
             />
+            {selectedCategory && (
+              <span
+                className={`btn-tooltip-wrapper ${
+                  !selectedCategory.deletable ? "btn-tooltip-wrapper--disabled" : ""
+                }`}
+              >
+                <Button
+                  className="form-button"
+                  text="Eliminar categoría"
+                  type="button"
+                  onClick={() => setShowDeleteModal(true)}
+                  disabled={sending || deleting || !selectedCategory.deletable}
+                  aria-describedby={
+                    !selectedCategory.deletable ? "category-delete-tooltip" : undefined
+                  }
+                />
+                {!selectedCategory.deletable && (
+                  <span
+                    id="category-delete-tooltip"
+                    className="btn-tooltip"
+                    role="tooltip"
+                  >
+                    No se puede eliminar: tiene destinos asociados. Reasigná o
+                    eliminá esos destinos primero.
+                  </span>
+                )}
+              </span>
+            )}
           </div>
         </form>
       </div>
+      {showDeleteModal && (
+        <ModalConfirm
+          title="Eliminar categoría"
+          message={`¿Estás seguro de que querés eliminar "${selectedCategory?.name}"?`}
+          onConfirm={handleDeleteCategory}
+          onCancel={() => setShowDeleteModal(false)}
+        />
+      )}
     </div>
   );
 };

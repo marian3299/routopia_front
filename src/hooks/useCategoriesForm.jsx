@@ -1,12 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNotification } from "../context/useNotificationProvider";
 import { useForm } from "react-hook-form";
-import { createCategory, updateCategory } from "../services/category.service";
+import {
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} from "../services/category.service";
 
-const useCategoriesForm = ({ selectedCategory, onSaved }) => {
+const useCategoriesForm = ({ selectedCategory, onSaved, onDeleted }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [sending, setSending] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const { notify } = useNotification();
   const {
@@ -165,6 +171,33 @@ const useCategoriesForm = ({ selectedCategory, onSaved }) => {
     }
   };
 
+  const handleDeleteCategory = async () => {
+    if (!selectedCategory) return;
+    setDeleting(true);
+    try {
+      await deleteCategory(selectedCategory.id);
+      setShowDeleteModal(false);
+      notify({
+        message: "¡Categoría eliminada correctamente!",
+        type: "success",
+      });
+      if (onDeleted) {
+        await onDeleted();
+      }
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      setShowDeleteModal(false);
+      notify({
+        message:
+          error.response?.data?.message ||
+          "No se pudo eliminar la categoría.",
+        type: "error",
+      });
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   const imageRegister = register("image", {
     validate: {
       required: (files) => {
@@ -215,6 +248,10 @@ const useCategoriesForm = ({ selectedCategory, onSaved }) => {
     handleInputChange,
     handleRemoveImage,
     sending,
+    showDeleteModal,
+    setShowDeleteModal,
+    handleDeleteCategory,
+    deleting,
   };
 };
 

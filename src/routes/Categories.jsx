@@ -6,9 +6,14 @@ import CategoriesForm from "../components/CategoriesForm";
 import Button from "../components/Button";
 
 const Categories = () => {
-  const { selectedCategory, handleOpenForm, openForm } =
+  const { selectedCategory, handleOpenForm, openForm, onDeleteCategory } =
     useCategoriesContainer();
   const categoriesList = useCategoriesList();
+
+  const handleCategoryDeleted = async () => {
+    await categoriesList.goToFirstPage();
+    onDeleteCategory();
+  };
 
   return (
     <div className="users-container">
@@ -34,6 +39,7 @@ const Categories = () => {
           <CategoriesForm
             selectedCategory={selectedCategory}
             onSaved={categoriesList.goToFirstPage}
+            onDeleted={handleCategoryDeleted}
           />
         ) : null}
       </div>

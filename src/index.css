@@ -132,10 +132,15 @@ button:hover {
   font-weight: bold;
 }
 
-.form-button:hover {
+.form-button:not(:disabled):hover {
   background-color: #f1d6bd;
   border: 2px solid #f1d6bd;
   color: #1a1a1a;
+}
+
+.form-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .form-button.secondary {
@@ -1466,6 +1471,52 @@ button:hover .btnArrow {
   visibility: visible;
 }
 
+.btn-tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+
+.btn-tooltip-wrapper--disabled {
+  cursor: not-allowed;
+}
+
+.btn-tooltip {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 20;
+  max-width: 260px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #1f2937;
+  color: #fff;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 400;
+  white-space: normal;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.btn-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 16px;
+  border: 6px solid transparent;
+  border-top-color: #1f2937;
+}
+
+.btn-tooltip-wrapper--disabled:hover .btn-tooltip,
+.btn-tooltip-wrapper--disabled:focus-within .btn-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
 .policy-form-item {
   padding: 1rem;
   border: 1px solid #e5e7eb;
@@ -2634,4 +2685,8 @@ button:hover .btnArrow {
   display: flex;
   gap: 16px;
   justify-content: flex-end;
+}
+
+.form-button-container > * {
+  flex: 1 1 50%;
 }
