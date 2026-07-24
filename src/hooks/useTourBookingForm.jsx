@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useNotification } from "../context/useNotificationProvider";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -27,6 +28,8 @@ const isSameDay = (a, b) =>
 const useTourBookingForm = ({ destination }) => {
   const { notify } = useNotification();
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [blockedDates, setBlockedDates] = useState([]);
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [availabilityError, setAvailabilityError] = useState(false);
@@ -75,6 +78,16 @@ const useTourBookingForm = ({ destination }) => {
   }, [fetchAvailability]);
 
   const onSubmit = async (data) => {
+    if (!user) {
+      navigate("/login", {
+        state: {
+          message: "Iniciá sesión para reservar este destino.",
+          from: location.pathname,
+        },
+      });
+      return;
+    }
+
     const isBlocked = blockedDates.some((date) =>
       isSameDay(date, data.bookingDate),
     );
@@ -90,7 +103,7 @@ const useTourBookingForm = ({ destination }) => {
       destinoId: destination.id,
       bookingDate: formatDateParam(data.bookingDate),
       personCount: data.personCount,
-      userId: user?.id,
+      userId: user.id,
     };
 
     try {

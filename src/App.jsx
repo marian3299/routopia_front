@@ -31,31 +31,12 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
+            {/* Rutas públicas - se pueden navegar sin login, igual que en Booking */}
+            <Route path="/" element={<Home />} />
+            <Route path="/tour/:id" element={<TourDetail />} />
+            <Route path="/category/:id" element={<Category />} />
+
             {/* Rutas protegidas - requieren autenticación */}
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tour/:id"
-              element={
-                <ProtectedRoute>
-                  <TourDetail />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/category/:id"
-              element={
-                <ProtectedRoute>
-                  <Category />
-                </ProtectedRoute>
-              }
-            />
             <Route
               path="/profile"
               element={

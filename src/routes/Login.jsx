@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import "../index.css";
 import { useAuth } from "../context/AuthContext";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const loginMessage = location.state?.message;
   const {
     register,
     handleSubmit,
@@ -16,7 +18,11 @@ function Login() {
   const onSubmit = async (data) => {
     try {
       const userData = await login(data.email, data.password);
-      navigate(userData.role === "ADMIN" ? "/admin" : "/");
+      if (location.state?.from) {
+        navigate(location.state.from);
+      } else {
+        navigate(userData.role === "ADMIN" ? "/admin" : "/");
+      }
     } catch (err) {
       console.log(err);
       setError("root", { message: "Credenciales inválidas" });
@@ -27,6 +33,7 @@ function Login() {
     <main className="main-container">
       <div className="form-tour-container auth-container">
         <h2 className="auth-title">Iniciar sesión</h2>
+        {loginMessage && <p className="login-context-message">{loginMessage}</p>}
         <div className="form-section auth-card">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
@@ -69,7 +76,7 @@ function Login() {
         </div>
         <p className="auth-alt" style={{ marginTop: 8 }}>
           ¿No tienes cuenta?{" "}
-          <Link to="/register" className="auth-link">
+          <Link to="/register" state={location.state} className="auth-link">
             Regístrate
           </Link>
         </p>

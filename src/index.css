@@ -1687,6 +1687,16 @@ button:hover .btnArrow {
   text-decoration: underline;
 }
 
+.login-context-message {
+  text-align: center;
+  background: #fff4e5;
+  color: #8a5300;
+  border: 1px solid #ffd699;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
