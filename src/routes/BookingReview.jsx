@@ -40,6 +40,7 @@ const BookingReview = () => {
     loadingDestination,
     bookingDate,
     personCount,
+    notes,
     checkingAvailability,
     dateUnavailable,
     submitting,
@@ -174,6 +175,13 @@ const BookingReview = () => {
               </p>
             )}
           </div>
+
+          {notes && (
+            <div className="booking-review-block">
+              <h3>Comentarios adicionales</h3>
+              <p>{notes}</p>
+            </div>
+          )}
 
           <button
             type="button"

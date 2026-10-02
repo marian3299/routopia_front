@@ -19,6 +19,7 @@ import { PERMISSIONS } from "./constants/permissions";
 import Characteristics from "./routes/Categories";
 import Favorites from "./routes/Favorites";
 import BookingReview from "./routes/BookingReview";
+import BookingConfirmation from "./routes/BookingConfirmation";
 
 function App() {
   return (
@@ -43,6 +44,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <BookingReview />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tour/:id/reserva-confirmada"
+              element={
+                <ProtectedRoute>
+                  <BookingConfirmation />
                 </ProtectedRoute>
               }
             />

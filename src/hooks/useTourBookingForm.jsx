@@ -40,6 +40,7 @@ const useTourBookingForm = ({ destination }) => {
     defaultValues: {
       bookingDate: null,
       personCount: 1,
+      notes: "",
     },
   });
 
@@ -99,6 +100,7 @@ const useTourBookingForm = ({ destination }) => {
       state: {
         bookingDate: formatDateParam(data.bookingDate),
         personCount: data.personCount,
+        notes: data.notes?.trim() || null,
       },
     });
   };

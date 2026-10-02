@@ -95,6 +95,12 @@ const TourDescription = ({ destination }) => {
             <span className="error">{errors.personCount.message}</span>
           )}
 
+          <textarea
+            placeholder="Comentarios adicionales (opcional)"
+            rows={3}
+            {...register("notes")}
+          />
+
           <button className="primary" type="submit">
             Continuar con la reserva
           </button>

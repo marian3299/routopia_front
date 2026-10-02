@@ -17,6 +17,7 @@ const useBookingReview = () => {
 
   const bookingDate = location.state?.bookingDate ?? null;
   const personCount = location.state?.personCount ?? null;
+  const notes = location.state?.notes ?? null;
 
   const [destination, setDestination] = useState(null);
   const [loadingDestination, setLoadingDestination] = useState(true);
@@ -85,17 +86,20 @@ const useBookingReview = () => {
 
     setSubmitting(true);
     try {
-      await createBooking({
+      const booking = await createBooking({
         destinoId: Number(id),
         bookingDate,
         personCount,
+        notes,
         userId: user.id,
       });
-      notify({
-        message: `Reserva confirmada para ${destination?.name || "el destino"} (${personCount} persona/s)`,
-        type: "success",
+      navigate(`/tour/${id}/reserva-confirmada`, {
+        state: {
+          booking,
+          destinationName: destination?.name,
+          destinationImage: destination?.imageUrl,
+        },
       });
-      navigate(`/tour/${id}`);
     } catch (error) {
       notify({
         message:
@@ -112,6 +116,7 @@ const useBookingReview = () => {
     dateUnavailable,
     bookingDate,
     personCount,
+    notes,
     id,
     destination,
     notify,
@@ -131,6 +136,7 @@ const useBookingReview = () => {
     loadingDestination,
     bookingDate,
     personCount,
+    notes,
     checkingAvailability,
     dateUnavailable,
     submitting,

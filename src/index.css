@@ -2882,3 +2882,79 @@ button:hover .btnArrow {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.booking-confirmation-page {
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.booking-confirmation-card {
+  width: 100%;
+  max-width: 480px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 32px 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.booking-confirmation-icon {
+  color: #2ecc71;
+  font-size: 56px;
+}
+
+.booking-confirmation-subtitle {
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.booking-confirmation-image {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.booking-confirmation-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.booking-confirmation-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 6px;
+}
+
+.booking-confirmation-row span {
+  color: #666;
+}
+
+.booking-confirmation-actions {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.booking-confirmation-actions > * {
+  flex: 1;
+}
+
+.booking-confirmation-actions button {
+  width: 100%;
+}
