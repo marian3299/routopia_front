@@ -2755,3 +2755,130 @@ button:hover .btnArrow {
 .form-button-container > * {
   flex: 1 1 50%;
 }
+
+.booking-review-status {
+  padding: 60px 24px;
+  text-align: center;
+  color: #666;
+}
+
+.booking-review-page {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  box-sizing: border-box;
+  padding: 24px 16px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.booking-review-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1a1a1a;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.booking-review-content {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.booking-review-product {
+  flex: 2 1 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.booking-review-product h1 {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.booking-review-traits-section h2,
+.booking-review-description h2,
+.booking-review-gallery h2 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.booking-review-description {
+  color: #444;
+  line-height: 1.5;
+}
+
+.booking-review-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.booking-review-traits li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f1d6bd;
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.booking-review-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.booking-review-summary {
+  flex: 1 1 300px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: sticky;
+  top: 16px;
+}
+
+.booking-review-summary h2 {
+  font-size: 1.3rem;
+}
+
+.booking-review-block h3 {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.booking-review-block p {
+  margin: 2px 0;
+}
+
+.booking-review-checking {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.booking-review-error {
+  color: #c0392b;
+  font-weight: 500;
+}
+
+.booking-review-submit {
+  width: 100%;
+}
+
+.booking-review-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

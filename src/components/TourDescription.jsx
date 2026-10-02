@@ -96,7 +96,7 @@ const TourDescription = ({ destination }) => {
           )}
 
           <button className="primary" type="submit">
-            Reservar
+            Continuar con la reserva
           </button>
         </form>
       </div>

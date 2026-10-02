@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { PERMISSIONS } from "./constants/permissions";
 import Characteristics from "./routes/Categories";
 import Favorites from "./routes/Favorites";
+import BookingReview from "./routes/BookingReview";
 
 function App() {
   return (
@@ -35,6 +36,16 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/tour/:id" element={<TourDetail />} />
             <Route path="/category/:id" element={<Category />} />
+
+            {/* Reserva - requiere login, se accede desde el detalle del producto */}
+            <Route
+              path="/tour/:id/reservar"
+              element={
+                <ProtectedRoute>
+                  <BookingReview />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Rutas protegidas - requieren autenticación */}
             <Route

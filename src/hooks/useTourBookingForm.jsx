@@ -1,14 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useNotification } from "../context/useNotificationProvider";
 import { useAuth } from "../context/AuthContext";
-import {
-  createBooking,
-  getBookingAvailability,
-} from "../services/booking.service";
+import { useNotification } from "../context/useNotificationProvider";
+import { getBookingAvailability } from "../services/booking.service";
 
-const formatDateParam = (date) => {
+export const formatDateParam = (date) => {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
   const d = String(date.getDate()).padStart(2, "0");
@@ -39,7 +36,6 @@ const useTourBookingForm = ({ destination }) => {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
       bookingDate: null,
@@ -77,7 +73,7 @@ const useTourBookingForm = ({ destination }) => {
     fetchAvailability();
   }, [fetchAvailability]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     if (!user) {
       navigate("/login", {
         state: {
@@ -99,30 +95,12 @@ const useTourBookingForm = ({ destination }) => {
       return;
     }
 
-    const bookingData = {
-      destinoId: destination.id,
-      bookingDate: formatDateParam(data.bookingDate),
-      personCount: data.personCount,
-      userId: user.id,
-    };
-
-    try {
-      await createBooking(bookingData);
-      notify({
-        message: `Reserva confirmada para ${destination?.name || "destino"} (${data.personCount} persona/s)`,
-        type: "success",
-      });
-      reset({ bookingDate: null, personCount: 1 });
-      await fetchAvailability();
-    } catch (error) {
-      notify({
-        message:
-          error.response?.data?.message ||
-          "No se pudo procesar la reserva. Intenta nuevamente.",
-        type: "error",
-      });
-      console.error("Error creating booking:", error);
-    }
+    navigate(`/tour/${destination.id}/reservar`, {
+      state: {
+        bookingDate: formatDateParam(data.bookingDate),
+        personCount: data.personCount,
+      },
+    });
   };
 
   return {
