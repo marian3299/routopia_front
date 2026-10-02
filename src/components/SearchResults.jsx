@@ -7,15 +7,25 @@ import CategoryFilter from "./CategoryFilter";
 import { useAppDispatch } from "../redux/store";
 import { clearSearch } from "../redux/routopiaActions";
 
-const buildSearchQuery = (q, categoryTypes) => {
+const formatDateParam = (date) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+};
+
+const formatDateLabel = (date) => date.toLocaleDateString("es-AR");
+
+const buildSearchQuery = (q, categoryTypes, date) => {
   const query = {};
   const trimmed = q?.trim();
   if (trimmed) query.q = trimmed;
   if (categoryTypes?.length > 0) query.category = categoryTypes;
+  if (date) query.date = formatDateParam(date);
   return query;
 };
 
-const SearchResults = ({ searchQuery }) => {
+const SearchResults = ({ searchQuery, searchDate }) => {
   const [selectedCategoryTypes, setSelectedCategoryTypes] = React.useState([]);
   const [totalSinFiltroCategoria, setTotalSinFiltroCategoria] =
     React.useState(null);
@@ -28,26 +38,28 @@ const SearchResults = ({ searchQuery }) => {
     currentPage,
     goToPage,
     updateQuery,
-  } = useRecomendations(buildSearchQuery(searchQuery, []), 10);
+  } = useRecomendations(buildSearchQuery(searchQuery, [], searchDate), 10);
 
   const { categories } = useCategories({ paginate: false });
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     setTotalSinFiltroCategoria(null);
-  }, [searchQuery]);
+  }, [searchQuery, searchDate]);
 
   React.useEffect(() => {
-    if (!searchQuery?.trim()) return;
-    updateQuery(buildSearchQuery(searchQuery, selectedCategoryTypes));
+    if (!searchQuery?.trim() && !searchDate) return;
+    updateQuery(
+      buildSearchQuery(searchQuery, selectedCategoryTypes, searchDate),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery, selectedCategoryTypes]);
+  }, [searchQuery, searchDate, selectedCategoryTypes]);
 
   React.useEffect(() => {
     if (
       !fetching_destinations &&
       selectedCategoryTypes.length === 0 &&
-      searchQuery?.trim()
+      (searchQuery?.trim() || searchDate)
     ) {
       setTotalSinFiltroCategoria(totalElements);
     }
@@ -56,6 +68,7 @@ const SearchResults = ({ searchQuery }) => {
     selectedCategoryTypes.length,
     totalElements,
     searchQuery,
+    searchDate,
   ]);
 
   const handleClearSearch = () => {
@@ -84,7 +97,17 @@ const SearchResults = ({ searchQuery }) => {
   return (
     <div className="search-results-container">
       <div className="search-results-header">
-        <h2>Resultados de búsqueda para: &quot;{searchQuery}&quot;</h2>
+        <h2>
+          Resultados de búsqueda
+          {searchQuery?.trim() ? <> para: &quot;{searchQuery}&quot;</> : null}
+          {searchDate ? (
+            <>
+              {" "}
+              {searchQuery?.trim() ? "y " : "para "}fecha:{" "}
+              {formatDateLabel(searchDate)}
+            </>
+          ) : null}
+        </h2>
         <button type="button" onClick={handleClearSearch}>
           Limpiar búsqueda
         </button>

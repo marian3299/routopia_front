@@ -14,9 +14,14 @@ export const setHasSearch = (hasSearch) => (dispatch) => {
   dispatch(actions.setHasSearch({ hasSearch }));
 };
 
+export const setSearchDate = (searchDate) => (dispatch) => {
+  dispatch(actions.setSearchDate({ searchDate }));
+};
+
 export const clearSearch = () => (dispatch) => {
   dispatch(actions.setSearch({ search: "" }));
   dispatch(actions.setInputSearch({ inputSearch: "" }));
+  dispatch(actions.setSearchDate({ searchDate: null }));
   dispatch(actions.setHasSearch({ hasSearch: false }));
 };
 

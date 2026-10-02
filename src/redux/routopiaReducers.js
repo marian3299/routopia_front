@@ -13,6 +13,7 @@ const cases = {
   SET_SEARCH: "setSearch",
   SET_HAS_SEARCH: "setHasSearch",
   SET_INPUT_SEARCH: "setInputSearch",
+  SET_SEARCH_DATE: "setSearchDate",
 };
 
 const reducers = {
@@ -23,6 +24,7 @@ const reducers = {
   [cases.SET_SEARCH]: commonAction,
   [cases.SET_HAS_SEARCH]: commonAction,
   [cases.SET_INPUT_SEARCH]: commonAction,
+  [cases.SET_SEARCH_DATE]: commonAction,
 };
 
 export default reducers;
