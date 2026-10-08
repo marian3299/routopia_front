@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { PERMISSIONS } from "./constants/permissions";
 import Characteristics from "./routes/Categories";
 import Favorites from "./routes/Favorites";
+import BookingHistory from "./routes/BookingHistory";
 import BookingReview from "./routes/BookingReview";
 import BookingConfirmation from "./routes/BookingConfirmation";
 
@@ -70,6 +71,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Favorites />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-bookings"
+              element={
+                <ProtectedRoute>
+                  <BookingHistory />
                 </ProtectedRoute>
               }
             />

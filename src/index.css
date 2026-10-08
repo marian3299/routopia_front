@@ -2958,3 +2958,85 @@ button:hover .btnArrow {
 .booking-confirmation-actions button {
   width: 100%;
 }
+
+.booking-history-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.booking-history-empty-msg {
+  text-align: center;
+  color: #6b7280;
+  padding: 2rem 1rem;
+  line-height: 1.5;
+}
+
+.booking-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px 0;
+}
+
+.booking-history-item {
+  display: flex;
+  gap: 16px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 16px;
+  color: inherit;
+  transition: box-shadow 0.2s ease;
+}
+
+.booking-history-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.booking-history-image {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.booking-history-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.booking-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.booking-history-header h2 {
+  font-size: 1.1rem;
+}
+
+.booking-history-status {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.booking-history-status--confirmed {
+  background-color: #d1f7e3;
+  color: #1a7f4e;
+}
+
+.booking-history-notes {
+  color: #555;
+}

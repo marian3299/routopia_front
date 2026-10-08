@@ -23,6 +23,7 @@ export const URLS = {
   //Bookings
   CREATE_BOOKING: "/bookings",
   BOOKING_AVAILABILITY: "/bookings/availability",
+  MY_BOOKINGS: "/bookings/me",
 
   //Favorites
   GET_FAVORITES: "/favorites",

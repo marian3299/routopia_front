@@ -22,3 +22,15 @@ export const getBookingAvailability = async (destinoId, from, to) => {
     throw error;
   }
 };
+
+export const getMyBookings = async ({ page = 0, size = 10 } = {}) => {
+  try {
+    const response = await api.get(URLS.MY_BOOKINGS, {
+      params: { page, size },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching booking history:", error);
+    throw error;
+  }
+};

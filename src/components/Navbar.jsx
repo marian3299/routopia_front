@@ -23,10 +23,16 @@ const Navbar = () => {
         {user && (
           <>
             {user.role !== "ADMIN" && (
-              <Button
-                text="Mis favoritos"
-                onClick={() => navigate("/favorites")}
-              />
+              <>
+                <Button
+                  text="Mis favoritos"
+                  onClick={() => navigate("/favorites")}
+                />
+                <Button
+                  text="Mis reservas"
+                  onClick={() => navigate("/my-bookings")}
+                />
+              </>
             )}
             {hasPermission(PERMISSIONS.DESTINOS.CREATE) && (
               <Button
