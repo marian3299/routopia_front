@@ -25,6 +25,10 @@ export const URLS = {
   BOOKING_AVAILABILITY: "/bookings/availability",
   MY_BOOKINGS: "/bookings/me",
 
+  //Settings
+  GET_WHATSAPP_SETTINGS: "/settings/whatsapp",
+  UPDATE_WHATSAPP_SETTINGS: "/admin/settings/whatsapp",
+
   //Favorites
   GET_FAVORITES: "/favorites",
   GET_FAVORITE_DESTINATIONS: "/favorites/destinos",

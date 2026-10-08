@@ -21,6 +21,8 @@ import Favorites from "./routes/Favorites";
 import BookingHistory from "./routes/BookingHistory";
 import BookingReview from "./routes/BookingReview";
 import BookingConfirmation from "./routes/BookingConfirmation";
+import WhatsAppFloatButton from "./components/WhatsAppFloatButton";
+import AdminSettings from "./routes/AdminSettings";
 
 function App() {
   return (
@@ -136,8 +138,17 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/admin/settings"
+              element={
+                <ProtectedRoute adminOnly>
+                  <AdminSettings />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
+        <WhatsAppFloatButton />
         <Footer />
         </FavoritesProvider>
       </AuthProvider>

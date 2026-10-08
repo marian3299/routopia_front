@@ -64,6 +64,12 @@ const Navbar = () => {
                 onClick={() => navigate("/categories")}
               />
             )}
+            {user.role === "ADMIN" && (
+              <Button
+                text="Configuración"
+                onClick={() => navigate("/admin/settings")}
+              />
+            )}
           </>
         )}
         {!user && (
