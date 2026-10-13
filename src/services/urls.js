@@ -27,7 +27,9 @@ export const URLS = {
 
   //Settings
   GET_WHATSAPP_SETTINGS: "/settings/whatsapp",
+  GET_ADMIN_SETTINGS: "/admin/settings",
   UPDATE_WHATSAPP_SETTINGS: "/admin/settings/whatsapp",
+  UPDATE_EMAIL_SETTINGS: "/admin/settings/email",
 
   //Favorites
   GET_FAVORITES: "/favorites",

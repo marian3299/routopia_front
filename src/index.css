@@ -3103,3 +3103,65 @@ button:hover .btnArrow {
   margin-top: 8px;
   align-self: flex-start;
 }
+
+.admin-settings-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.admin-settings-section:last-child {
+  border-bottom: none;
+}
+
+.admin-settings-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.admin-settings-badge {
+  background-color: #d1f7e3;
+  color: #1a7f4e;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.admin-settings-password-field {
+  position: relative;
+  display: flex;
+}
+
+.admin-settings-password-field input {
+  width: 100%;
+  padding-right: 42px;
+}
+
+.admin-settings-password-toggle {
+  position: absolute;
+  right: 4px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #666;
+  padding: 0 10px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.admin-settings-password-toggle svg {
+  display: block;
+  transform: translateY(1px);
+}
+
+.admin-settings-password-toggle:hover {
+  background: transparent;
+  color: #1a1a1a;
+}
