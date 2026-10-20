@@ -91,6 +91,7 @@ function App() {
               element={
                 <ProtectedRoute
                   requiredPermission={PERMISSIONS.DESTINOS.CREATE}
+                  blockOnMobile
                 >
                   <FormTour />
                 </ProtectedRoute>
@@ -99,7 +100,10 @@ function App() {
             <Route
               path="/edit-tour/:id"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.DESTINOS.EDIT}>
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.DESTINOS.EDIT}
+                  blockOnMobile
+                >
                   <FormTour />
                 </ProtectedRoute>
               }
@@ -107,7 +111,10 @@ function App() {
             <Route
               path="/admin"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.DESTINOS.VIEW}>
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.DESTINOS.VIEW}
+                  blockOnMobile
+                >
                   <Admin />
                 </ProtectedRoute>
               }
@@ -115,7 +122,10 @@ function App() {
             <Route
               path="/users"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.USERS.MANAGE}>
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.USERS.MANAGE}
+                  blockOnMobile
+                >
                   <Users />
                 </ProtectedRoute>
               }
@@ -123,7 +133,10 @@ function App() {
             <Route
               path="/traits"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.TRAITS.VIEW}>
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.TRAITS.VIEW}
+                  blockOnMobile
+                >
                   <Traits />
                 </ProtectedRoute>
               }
@@ -133,6 +146,7 @@ function App() {
               element={
                 <ProtectedRoute
                   requiredPermission={PERMISSIONS.CHARACTERISTICS.VIEW}
+                  blockOnMobile
                 >
                   <Characteristics />
                 </ProtectedRoute>
@@ -141,7 +155,7 @@ function App() {
             <Route
               path="/admin/settings"
               element={
-                <ProtectedRoute adminOnly>
+                <ProtectedRoute adminOnly blockOnMobile>
                   <AdminSettings />
                 </ProtectedRoute>
               }
