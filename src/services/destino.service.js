@@ -34,6 +34,18 @@ export const getDestinations = async (query = {}) => {
   }
 };
 
+export const getRandomDestinations = async (limit = 10) => {
+  try {
+    const response = await api.get(URLS.GET_RANDOM_DESTINATIONS, {
+      params: { limit },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching random destinations:", error);
+    throw error;
+  }
+};
+
 export const getDestinationById = async (id) => {
   try {
     const response = await api.get(URLS.GET_DESTINATION_BY_ID(id));

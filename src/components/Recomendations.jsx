@@ -1,30 +1,19 @@
 import React from "react";
-import useRecomendations from "../hooks/useRecomendations";
+import useRandomRecommendations from "../hooks/useRandomRecommendations";
 import useFavorites from "../hooks/useFavorites";
 import RecomendationCard from "./RecomendationCard";
-import Pagination from "./Pagination";
 
 const Recomendations = () => {
-  const {
-    destinations,
-    fetching_destinations,
-    totalPages,
-    currentPage,
-    goToPage,
-  } = useRecomendations({}, 10);
+  const { destinations, fetching } = useRandomRecommendations(10);
 
-  const {
-    isAuthenticated,
-    isFavorite,
-    handleToggleFavorite,
-    togglingId,
-  } = useFavorites();
+  const { isAuthenticated, isFavorite, handleToggleFavorite, togglingId } =
+    useFavorites();
 
   return (
     <div className="recomendations-container">
       <h1>Recomendaciones</h1>
-      <div className="recomendations">
-        {fetching_destinations ? (
+      <div className="recomendations recomendations--featured">
+        {fetching ? (
           <p>Cargando...</p>
         ) : (
           destinations.map((destination) => (
@@ -45,16 +34,6 @@ const Recomendations = () => {
           ))
         )}
       </div>
-
-      {/* Paginación reutilizable */}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={goToPage}
-        loading={fetching_destinations}
-        previousLabel="← Anterior"
-        nextLabel="Siguiente →"
-      />
     </div>
   );
 };

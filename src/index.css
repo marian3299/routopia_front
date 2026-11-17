@@ -618,6 +618,30 @@ main {
   max-width: 1470px;
 }
 
+/* Home: muestra aleatoria de hasta 10 destinos, 2 columnas x 5 filas como máximo */
+.recomendations--featured {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  max-width: 1470px;
+}
+
+@media (max-width: 1200px) {
+  .recomendations--featured {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .recomendations--featured {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .recomendations--featured {
+    grid-template-columns: 1fr;
+  }
+}
+
 .recomendations.recomendations--refreshing {
   opacity: 0.72;
   transition: opacity 0.15s ease;
