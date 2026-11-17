@@ -159,7 +159,7 @@ const Users = () => {
                     </div>
                   ))}
                 </div>
-                {!hasPermission(PERMISSIONS.USERS.VIEW) && (
+                {hasPermission(PERMISSIONS.USERS.VIEW) && (
                   <div className="permissions-save-container">
                     <button
                       className="permissions-save-button"

@@ -120,6 +120,8 @@ const useUsers = () => {
     const names = {
       DESTINOS: "Destinos",
       USERS: "Usuarios",
+      TRAITS: "Características",
+      CHARACTERISTICS: "Categorías",
     };
     return names[section] || section;
   };

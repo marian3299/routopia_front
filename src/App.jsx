@@ -123,7 +123,7 @@ function App() {
               path="/users"
               element={
                 <ProtectedRoute
-                  requiredPermission={PERMISSIONS.USERS.MANAGE}
+                  requiredPermission={PERMISSIONS.USERS.VIEW}
                   blockOnMobile
                 >
                   <Users />
