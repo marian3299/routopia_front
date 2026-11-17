@@ -2875,6 +2875,10 @@ button:hover .btnArrow {
   display: block;
 }
 
+.image-preview-list {
+  display: block;
+}
+
 .image-remove-button {
   position: absolute;
   top: 5px;

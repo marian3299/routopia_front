@@ -480,7 +480,7 @@ const FormTour = () => {
                 currentSecondaryImages &&
                 currentSecondaryImages.length > 0 && (
                   <div
-                    className="image-preview"
+                    className="image-preview-list"
                     style={{ marginBottom: "10px" }}
                   >
                     <p style={{ fontSize: "14px", marginBottom: "5px" }}>
