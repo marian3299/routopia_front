@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { FaArrowLeft, FaShareAlt, FaStar } from "react-icons/fa";
+import { FaArrowLeft, FaHeart, FaRegHeart, FaShareAlt, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ImageCarousel from "../components/ImageCarousel";
 import TourDescription from "../components/TourDescription";
@@ -9,6 +9,7 @@ import ShareProductModal from "../components/ShareProductModal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import useTourDetail from "../hooks/useTourDetail";
 import useShareProduct from "../hooks/useShareProduct";
+import useFavorites from "../hooks/useFavorites";
 
 const TourDetail = () => {
   const { destination, fetching_destination, carouserImages } = useTourDetail();
@@ -16,6 +17,8 @@ const TourDetail = () => {
     averageRating: null,
     totalReviews: null,
   });
+  const { isAuthenticated, isFavorite, handleToggleFavorite, togglingId } =
+    useFavorites();
   const {
     isOpen,
     openShareModal,
@@ -60,6 +63,27 @@ const TourDetail = () => {
         </div>
 
         <div className="tour-detail-header-actions">
+          {isAuthenticated && (
+            <button
+              type="button"
+              className={`favorite-button ${isFavorite(destination?.id) ? "is-favorite" : ""}`}
+              onClick={(event) => handleToggleFavorite(destination?.id, event)}
+              disabled={togglingId === destination?.id}
+              aria-label={
+                isFavorite(destination?.id)
+                  ? "Quitar de favoritos"
+                  : "Marcar como favorito"
+              }
+              aria-pressed={isFavorite(destination?.id)}
+            >
+              {isFavorite(destination?.id) ? (
+                <FaHeart className="btnArrow" />
+              ) : (
+                <FaRegHeart className="btnArrow" />
+              )}{" "}
+              Favorito
+            </button>
+          )}
           <button
             type="button"
             className="share-button"

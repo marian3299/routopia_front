@@ -1054,11 +1054,21 @@ p.icon-text {
   }
 }
 
+.favorite-button,
 .share-button,
 .back-button {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.favorite-button svg {
+  color: #dc2626;
+}
+
+.favorite-button.is-favorite {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
 }
 
 .share-modal-overlay {
