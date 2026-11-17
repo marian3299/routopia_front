@@ -49,7 +49,7 @@ const Categories = () => {
                   className="category-card"
                   style={{
                     backgroundImage: category.imageUrl
-                      ? `url(${category.imageUrl})`
+                      ? `url("${category.imageUrl}")`
                       : undefined,
                   }}
                 >
