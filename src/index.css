@@ -1570,6 +1570,7 @@ button:hover .btnArrow {
   font-size: 2rem;
   font-weight: 700;
   margin: 0 0 0.5rem;
+  text-decoration: underline;
   text-underline-offset: 6px;
 }
 
